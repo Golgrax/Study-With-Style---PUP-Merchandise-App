@@ -1,3 +1,5 @@
+# REMAKE
+
 import sqlite3
 try:
     from werkzeug.security import generate_password_hash, check_password_hash
@@ -25,7 +27,6 @@ import os
 
 from create_profiles_table import create_profiles_table
 
-# Set window size for desktop testing
 Window.size = (360, 640)
 
 create_profiles_table()
@@ -33,7 +34,6 @@ create_profiles_table()
 DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'database.db')
 
 class DatabaseManager:
-    """Encapsulates database connection and queries."""
     def __init__(self, db_path=DB_PATH):
         self.db_path = db_path
 
@@ -112,10 +112,6 @@ class DatabaseManager:
         conn.close()
         return True
 
-# -------------------------
-# Authentication Screens
-# -------------------------
-
 class LoginScreen(Screen):
     username = ObjectProperty(None)
     password = ObjectProperty(None)
@@ -175,10 +171,6 @@ class RegisterScreen(Screen):
                       size_hint=(0.8, 0.3))
         popup.open()
 
-# -------------------------
-# Main Application Screens
-# -------------------------
-
 class HomeScreen(Screen):
     db_manager = DatabaseManager()
     best_seller = None
@@ -188,7 +180,6 @@ class HomeScreen(Screen):
         self.best_seller = self.db_manager.fetch_best_seller()
         best_seller_id = self.best_seller['id'] if self.best_seller else -1
         self.other_products = self.db_manager.fetch_other_products(best_seller_id)
-        # Set best seller image and label dynamically
         if self.best_seller:
             best_seller_image = self.ids.get('best_seller_image')
             best_seller_label = self.ids.get('best_seller_label')
@@ -213,7 +204,6 @@ class HomeScreen(Screen):
                 image_source=product['image_path'] if 'image_path' in product.keys() else ''
             )
             product_list.add_widget(item)
-        # Update height to minimum_height to ensure visibility
         product_list.height = product_list.minimum_height
 
 class ProductItem(BoxLayout):
@@ -291,7 +281,6 @@ class CartScreen(Screen):
                 item_layout.add_widget(product_image)
                 item_layout.add_widget(product_label)
 
-                # Add quantity editor buttons
                 def decrease_quantity(instance):
                     if item['quantity'] > 1:
                         item['quantity'] -= 1
@@ -355,16 +344,15 @@ class EditProfileScreen(Screen):
             self.manager.current = 'profile'
 
 class ProfileScreen(Screen):
-    username = StringProperty('')  # Store current username
+    username = StringProperty('')
     db_manager = DatabaseManager()
 
     def on_pre_enter(self):
         app = App.get_running_app()
-        self.username = getattr(app, 'current_user', '')  # Assuming app stores current logged-in username
+        self.username = getattr(app, 'current_user', '')
         profile = self.db_manager.fetch_profile(self.username)
         if profile:
             try:
-                # Access ids safely with get method
                 self.ids.get('name_label', Label()).text = profile['name'] if profile['name'] else ''
                 self.ids.get('address1_label', Label()).text = profile['address1'] if profile['address1'] else ''
                 self.ids.get('contact1_label', Label()).text = profile['contact1'] if profile['contact1'] else ''
@@ -373,7 +361,6 @@ class ProfileScreen(Screen):
             except Exception as e:
                 print(f"Error setting profile labels: {e}")
         else:
-            # Clear fields if no profile found
             self.ids.get('name_label', Label()).text = ''
             self.ids.get('address1_label', Label()).text = ''
             self.ids.get('contact1_label', Label()).text = ''
@@ -416,7 +403,6 @@ class OrderHistoryScreen(Screen):
         username = getattr(app, 'current_user', None)
         if not username:
             return
-        # Fetch order history from DB - placeholder query
         conn = self.db_manager.get_connection()
         orders = conn.execute('SELECT ref_no, status, quantity, payment FROM orders WHERE username = ?', (username,)).fetchall()
         conn.close()
@@ -435,10 +421,8 @@ class ContactUsScreen(Screen):
             popup = Popup(title="Error", content=Label(text="All fields are required."), size_hint=(0.8, 0.3))
             popup.open()
             return
-        # Here you would handle sending the message, e.g., save to DB or send email
         popup = Popup(title="Success", content=Label(text="Message sent successfully."), size_hint=(0.8, 0.3))
         popup.open()
-        # Clear fields after submission
         self.ids.name_input.text = ''
         self.ids.email_input.text = ''
         self.ids.message_input.text = ''
@@ -580,7 +564,6 @@ class CartScreen(Screen):
                 item_layout.add_widget(product_image)
                 item_layout.add_widget(product_label)
 
-                # Add quantity editor buttons
                 def decrease_quantity(instance):
                     if item['quantity'] > 1:
                         item['quantity'] -= 1
@@ -642,11 +625,9 @@ class StudyWithStyleApp(App):
         return db_manager.fetch_product_by_id(product_id)
 
     def on_start(self):
-        # Clear cart on start
         self.cart = []
 
     def on_stop(self):
-        # Save cart or cleanup if needed
         pass
 
     def on_profile_button(self):

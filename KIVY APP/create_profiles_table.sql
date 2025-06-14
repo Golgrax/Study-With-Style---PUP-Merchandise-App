@@ -49,3 +49,8 @@ CREATE TABLE IF NOT EXISTS users (
     username TEXT UNIQUE,
     password_hash TEXT
 );
+
+
+-- mico's table ^^^^^
+
+
