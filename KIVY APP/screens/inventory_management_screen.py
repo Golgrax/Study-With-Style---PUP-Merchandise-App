@@ -136,7 +136,7 @@ class InventoryManagementScreen(Screen):
         try:
             items = conn.execute('SELECT id, name, stock_quantity, price FROM products').fetchall()
             if not items:
-                inventory_list.add_widget(Label(text="No products in inventory.", color=(0.2,0.2,0.2,1)))
+                inventory_list.add_widget(Label(text="No products in inventory.", color=(0.2, 0.2, 0.2, 1)))
                 return
                 
             for item in items:

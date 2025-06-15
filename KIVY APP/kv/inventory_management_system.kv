@@ -19,49 +19,51 @@
             row_default_height: '40dp'
             row_force_default: True
             spacing: 10
+            col_default_width: '100dp'
+            col_force_default: True
             
             Label:
-                text: "Item ID (for Load/Delete)"
-                text_size: self.width, None
-                halign: 'left'
-                valign: 'middle'
+                text: "Item ID (Load/Delete)"
+                size_hint_x: 0.3
+                color: 0.2, 0.2, 0.2, 1
             TextInput:
                 id: item_id_input
+                size_hint_x: 0.7
                 hint_text: "Enter ID and press 'Load'"
             
             Label:
                 text: "Name"
-                text_size: self.width, None
-                halign: 'left'
-                valign: 'middle'
+                size_hint_x: 0.3
+                color: 0.2, 0.2, 0.2, 1
             TextInput:
                 id: item_name_input
+                size_hint_x: 0.7
             
             Label:
                 text: "Quantity"
-                text_size: self.width, None
-                halign: 'left'
-                valign: 'middle'
+                size_hint_x: 0.3
+                color: 0.2, 0.2, 0.2, 1
             TextInput:
                 id: quantity_input
+                size_hint_x: 0.7
             
             Label:
                 text: "Price"
-                text_size: self.width, None
-                halign: 'left'
-                valign: 'middle'
+                size_hint_x: 0.3
+                color: 0.2, 0.2, 0.2, 1
             TextInput:
                 id: price_input
+                size_hint_x: 0.7
 
             Button:
                 text: "Select Image"
+                size_hint_x: 0.3
                 on_release: root.open_file_chooser()
             Label:
                 id: image_path_label
+                size_hint_x: 0.7
                 text: "No image selected"
-                text_size: self.width, None
-                halign: 'left'
-                valign: 'middle'
+                color: 0.2, 0.2, 0.2, 1
 
         BoxLayout:
             size_hint_y: None
@@ -69,17 +71,13 @@
             spacing: 10
             Button:
                 text: "Add New"
-                on_release: root.add_item()
             Button:
                 text: "Load Item"
-                on_release: root.load_item_for_update()
             Button:
                 text: "Save Update"
-                on_release: root.update_item()
             Button:
                 text: "Delete"
-                on_release: root.delete_item()
-
+                
         Widget:
             size_hint_y: None
             height: '10dp'
@@ -91,15 +89,19 @@
             Label:
                 text: "ID"
                 bold: True
+                color: 0.1, 0.1, 0.1, 1
             Label:
                 text: "Name"
                 bold: True
+                color: 0.1, 0.1, 0.1, 1
             Label:
                 text: "Stock"
                 bold: True
+                color: 0.1, 0.1, 0.1, 1
             Label:
                 text: "Price"
                 bold: True
+                color: 0.1, 0.1, 0.1, 1
                 
         ScrollView:
             GridLayout:
@@ -107,8 +109,6 @@
                 cols: 4
                 size_hint_y: None
                 height: self.minimum_height
-                row_default_height: '30dp'
-                row_force_default: True
 
         Button:
             text: "Back"
