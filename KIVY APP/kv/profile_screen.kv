@@ -4,7 +4,6 @@
         padding: 10
         spacing: 15
 
-        # Top Section
         Image:
             source: '../pup_study_style/static/assets/profile_icon.png'
             size_hint_y: None
@@ -20,12 +19,12 @@
 
         Label:
             id: name_label
-            text: "Name: Loading..." # Populated by python
+            text: "Name: Loading..."
+            color: (0.1, 0.1, 0.1, 1)
             size_hint_y: None
             height: self.texture_size[1]
             font_size: '16sp'
 
-        # Address 1 Box
         BoxLayout:
             orientation: 'vertical'
             size_hint_y: None
@@ -49,20 +48,21 @@
                 text_size: self.width, None
             Label:
                 id: address1_label
-                text: 'Not set' # Populated by python
+                text: 'Not set'
                 halign: 'left'
                 text_size: self.width, None
                 size_hint_y: None
+                color: (0.1, 0.1, 0.1, 1)
                 height: self.texture_size[1]
             Label:
                 id: contact1_label
-                text: 'Contact: Not set' # Populated by python
+                text: 'Contact: Not set'
                 halign: 'left'
                 text_size: self.width, None
                 size_hint_y: None
+                color: (0.1, 0.1, 0.1, 1)
                 height: self.texture_size[1]
 
-        # Address 2 Box
         BoxLayout:
             orientation: 'vertical'
             size_hint_y: None
@@ -83,25 +83,27 @@
                 size_hint_y: None
                 height: '25dp'
                 halign: 'left'
+                color: (0.1, 0.1, 0.1, 1)
                 text_size: self.width, None
             Label:
                 id: address2_label
-                text: 'Not set' # Populated by python
+                text: 'Not set'
                 halign: 'left'
                 text_size: self.width, None
                 size_hint_y: None
+                color: (0.1, 0.1, 0.1, 1)
                 height: self.texture_size[1]
             Label:
                 id: contact2_label
-                text: 'Contact: Not set' # Populated by python
+                text: 'Contact: Not set'
                 halign: 'left'
                 text_size: self.width, None
                 size_hint_y: None
+                color: (0.1, 0.1, 0.1, 1)
                 height: self.texture_size[1]
 
-        Widget: # Spacer to push buttons to the bottom
+        Widget:
 
-        # Bottom Buttons
         BoxLayout:
             size_hint_y: None
             height: '50dp'
