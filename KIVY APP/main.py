@@ -1,5 +1,5 @@
 from kivy.app import App
-from kivy.uix.screenmanager import ScreenManager, FadeTransition
+from kivy.uix.screenmanager import ScreenManager, SlideTransition
 from kivy.core.window import Window
 from kivy.lang import Builder
 import os
@@ -35,7 +35,7 @@ class StudyWithStyleApp(App):
             if filename.endswith(".kv"):
                 Builder.load_file(os.path.join(kv_dir, filename))
 
-        sm = ScreenManager(transition=FadeTransition())
+        sm = ScreenManager(transition=SlideTransition(direction='left')) # pangit fade mo mico wahaha imma change into this
         sm.add_widget(LoginScreen(name="login"))
         sm.add_widget(RegisterScreen(name="register"))
         sm.add_widget(HomeScreen(name="home"))
