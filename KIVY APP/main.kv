@@ -1,5 +1,22 @@
 <Label>:
     color: 0.2, 0.2, 0.2, 1
+    font_size: '14sp'
+
+<Button>:
+    background_color: 0.4, 0.4, 0.4, 1
+    color: 1, 1, 1, 1
+    background_normal: ''
+    font_size: '14sp'
 
 <TextInput>:
     foreground_color: 0.1, 0.1, 0.1, 1
+    background_color: 1, 1, 1, 1
+    padding: [10, 10, 10, 10]
+    font_size: '16sp'
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: 0.8, 0.8, 0.8, 1
+        Line:
+            width: 1.2
+            rectangle: self.x, self.y, self.width, self.height
