@@ -17,7 +17,7 @@ class CartScreen(Screen):
 
         if not app.cart:
             cart_list.add_widget(Label(text="Your cart is empty.", font_size='18sp', color=(0.2, 0.2, 0.2, 1)))
-            self.ids.total_label.text = "Total: ₱0.00"
+            self.ids.total_label.text = "Total: P0.00"
             return
 
         for item in app.cart:
@@ -27,27 +27,30 @@ class CartScreen(Screen):
                 cart_list.add_widget(item_layout)
                 total_price += product['price'] * item['quantity']
         
-        self.ids.total_label.text = f"Total: ₱{total_price:.2f}"
+        self.ids.total_label.text = f"Total: P{total_price:.2f}"
 
     def create_cart_item_widget(self, item, product):
         app = App.get_running_app()
         item_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height='100dp', padding=10, spacing=10)
         
-        img_src = product.get('image_path', 'path/to/default.png')
-        product_image = Image(source=img_src, size_hint_x=None, width='80dp', allow_stretch=True, keep_ratio=True)
+        # ** THE FIX IS HERE **
+        default_img = os.path.join('..', 'pup_study_style', 'static', 'assets', 'question_mark.png')
+        img_src = product['image_path'] if 'image_path' in product.keys() and product['image_path'] else default_img
+        product_image = Image(source=img_src, size_hint_x=None, width='80dp')
 
         details_layout = BoxLayout(orientation='vertical')
         product_label = Label(text=f"{product['name']}", font_size='16sp', halign='left', valign='top')
         product_label.bind(size=product_label.setter('text_size'))
         
-        price_label = Label(text=f"₱{product['price']:.2f}", font_size='14sp', halign='left', valign='top')
+        price_label = Label(text=f"P{product['price']:.2f}", font_size='14sp', halign='left', valign='top')
         price_label.bind(size=price_label.setter('text_size'))
         details_layout.add_widget(product_label)
         details_layout.add_widget(price_label)
+
         quantity_controls = BoxLayout(orientation='horizontal', size_hint_x=None, width='120dp')
-        btn_decrease = Button(text='-', size_hint_x=None, width='40dp', on_release=lambda x: self.decrease_quantity(item))
+        btn_decrease = Button(text='-', size_hint_x=None, width='40dp', on_release=lambda x, i=item: self.decrease_quantity(i))
         quantity_label = Label(text=str(item['quantity']), size_hint_x=None, width='40dp')
-        btn_increase = Button(text='+', size_hint_x=None, width='40dp', on_release=lambda x: self.increase_quantity(item))
+        btn_increase = Button(text='+', size_hint_x=None, width='40dp', on_release=lambda x, i=item: self.increase_quantity(i))
         quantity_controls.add_widget(btn_decrease)
         quantity_controls.add_widget(quantity_label)
         quantity_controls.add_widget(btn_increase)
@@ -58,11 +61,10 @@ class CartScreen(Screen):
         return item_layout
 
     def decrease_quantity(self, item):
-        app = App.get_running_app()
         if item['quantity'] > 1:
             item['quantity'] -= 1
         else:
-            app.cart.remove(item)
+            App.get_running_app().cart.remove(item)
         self.populate_cart()
 
     def increase_quantity(self, item):

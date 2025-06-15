@@ -55,7 +55,7 @@ class InventoryManagementScreen(Screen):
         price_str = self.ids.price_input.text.strip()
 
         if not item_id_str:
-            self.show_popup("Error", "Please load an item first using its ID.")
+            self.show_popup("Error", "Please load an item first.")
             return
 
         try:
@@ -68,7 +68,11 @@ class InventoryManagementScreen(Screen):
         
         conn = self.db_manager.get_connection()
         try:
-            image_to_update = self.selected_image_path or self.ids.image_path_label.text
+            if self.selected_image_path:
+                image_to_update = self.selected_image_path
+            else:
+                old_product = self.db_manager.fetch_product_by_id(item_id)
+                image_to_update = old_product['image_path'] if old_product and 'image_path' in old_product.keys() else ''
             
             cursor = conn.execute('UPDATE products SET name = ?, stock_quantity = ?, price = ?, image_path = ? WHERE id = ?',
                                (name, quantity, price, image_to_update, item_id))
@@ -121,7 +125,7 @@ class InventoryManagementScreen(Screen):
                 self.ids.item_name_input.text = product['name']
                 self.ids.quantity_input.text = str(product['stock_quantity'])
                 self.ids.price_input.text = str(product['price'])
-                self.ids.image_path_label.text = product.get('image_path', 'No image selected')
+                self.ids.image_path_label.text = product['image_path'] if 'image_path' in product.keys() else 'No image'
                 self.selected_image_path = ""
             else:
                 self.show_popup("Not Found", f"No product with ID {item_id}.")
@@ -136,7 +140,7 @@ class InventoryManagementScreen(Screen):
         try:
             items = conn.execute('SELECT id, name, stock_quantity, price FROM products').fetchall()
             if not items:
-                inventory_list.add_widget(Label(text="No products in inventory.", color=(0.2, 0.2, 0.2, 1)))
+                inventory_list.add_widget(Label(text="No products in inventory.", color=(0.2,0.2,0.2,1)))
                 return
                 
             for item in items:
@@ -151,7 +155,8 @@ class InventoryManagementScreen(Screen):
             
     def open_file_chooser(self):
         content = BoxLayout(orientation='vertical')
-        file_chooser = FileChooserListView()
+        home_dir = os.path.expanduser('~')
+        file_chooser = FileChooserListView(path=home_dir)
         content.add_widget(file_chooser)
         
         btn_layout = BoxLayout(size_hint_y=None, height='44dp')
@@ -168,9 +173,14 @@ class InventoryManagementScreen(Screen):
                 source_path = file_chooser.selection[0]
                 filename = os.path.basename(source_path)
                 destination_path = os.path.join(self.assets_folder, filename)
+
+                if not os.path.exists(self.assets_folder):
+                    os.makedirs(self.assets_folder)
+
                 shutil.copy(source_path, destination_path)
+                
                 self.selected_image_path = os.path.join('..', 'pup_study_style', 'static', 'assets', filename).replace("\\", "/")
-                self.ids.image_path_label.text = self.selected_image_path
+                self.ids.image_path_label.text = filename
                 popup.dismiss()
 
         select_btn.bind(on_release=select_file)

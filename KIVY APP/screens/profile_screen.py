@@ -16,11 +16,11 @@ class ProfileScreen(Screen):
 
         profile = self.db_manager.fetch_profile(self.username)
         if profile:
-            self.ids.name_label.text = f"Name: {profile.get('name') or 'Not set'}"
-            self.ids.address1_label.text = profile.get('address1') or 'Not set'
-            self.ids.contact1_label.text = f"Contact: {profile.get('contact1') or 'Not set'}"
-            self.ids.address2_label.text = profile.get('address2') or 'Not set'
-            self.ids.contact2_label.text = f"Contact: {profile.get('contact2') or 'Not set'}"
+            self.ids.name_label.text = f"Name: {profile['name'] or 'Not set'}"
+            self.ids.address1_label.text = profile['address1'] or 'Not set'
+            self.ids.contact1_label.text = f"Contact: {profile['contact1'] or 'Not set'}"
+            self.ids.address2_label.text = profile['address2'] or 'Not set'
+            self.ids.contact2_label.text = f"Contact: {profile['contact2'] or 'Not set'}"
         else:
             self.ids.name_label.text = "Name: Not set"
             self.ids.address1_label.text = 'Not set'
