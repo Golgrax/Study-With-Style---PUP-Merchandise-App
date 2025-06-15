@@ -16,7 +16,7 @@ class OrderHistoryScreen(Screen):
         app = App.get_running_app()
         username = getattr(app, 'current_user', None)
         if not username:
-            order_list.add_widget(Label(text="Please log in to see order history."))
+            order_list.add_widget(Label(text="Please log in to see order history.", color=(0.2, 0.2, 0.2, 1)))
             return
 
         conn = self.db_manager.get_connection()
@@ -30,11 +30,11 @@ class OrderHistoryScreen(Screen):
             conn.close()
 
         if not orders:
-            order_list.add_widget(Label(text="No orders found."))
+            order_list.add_widget(Label(text="No orders found.", color=(0.2, 0.2, 0.2, 1)))
             return
 
         for order in orders:
-            order_list.add_widget(Label(text=str(order['ref_no'])))
-            order_list.add_widget(Label(text=str(order['status'])))
-            order_list.add_widget(Label(text=str(order['quantity'])))
-            order_list.add_widget(Label(text=str(order['payment'])))
+            order_list.add_widget(Label(text=str(order['ref_no']), color=(0.2, 0.2, 0.2, 1)))
+            order_list.add_widget(Label(text=str(order['status']), color=(0.2, 0.2, 0.2, 1)))
+            order_list.add_widget(Label(text=str(order['quantity']), color=(0.2, 0.2, 0.2, 1)))
+            order_list.add_widget(Label(text=str(order['payment']), color=(0.2, 0.2, 0.2, 1)))

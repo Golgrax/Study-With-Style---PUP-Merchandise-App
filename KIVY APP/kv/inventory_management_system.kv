@@ -15,25 +15,26 @@
         GridLayout:
             cols: 2
             size_hint_y: None
-            height: '160dp'
+            height: '200dp'
             spacing: 5
             Label:
                 text: "Item ID"
-                color: (0.1, 0.1, 0.1, 1)
+                color: 0.2, 0.2, 0.2, 1
             TextInput:
                 id: item_id_input
             Label:
                 text: "Name"
-                color: (0.1, 0.1, 0.1, 1)
+                color: 0.2, 0.2, 0.2, 1
             TextInput:
                 id: item_name_input
             Label:
                 text: "Quantity"
+                color: 0.2, 0.2, 0.2, 1
             TextInput:
                 id: quantity_input
             Label:
                 text: "Price"
-                color: (0.1, 0.1, 0.1, 1)
+                color: 0.2, 0.2, 0.2, 1
             TextInput:
                 id: price_input
 
@@ -66,4 +67,3 @@
             size_hint_y: None
             height: '40dp'
             on_release: app.root.current = 'home'
-

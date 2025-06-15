@@ -16,7 +16,7 @@ class CartScreen(Screen):
         total_price = 0
 
         if not app.cart:
-            cart_list.add_widget(Label(text="Your cart is empty.", font_size='18sp'))
+            cart_list.add_widget(Label(text="Your cart is empty.", font_size='18sp', color=(0.2, 0.2, 0.2, 1)))
             self.ids.total_label.text = "Total: ₱0.00"
             return
 
@@ -44,8 +44,6 @@ class CartScreen(Screen):
         price_label.bind(size=price_label.setter('text_size'))
         details_layout.add_widget(product_label)
         details_layout.add_widget(price_label)
-
-        # Quantity controls
         quantity_controls = BoxLayout(orientation='horizontal', size_hint_x=None, width='120dp')
         btn_decrease = Button(text='-', size_hint_x=None, width='40dp', on_release=lambda x: self.decrease_quantity(item))
         quantity_label = Label(text=str(item['quantity']), size_hint_x=None, width='40dp')
