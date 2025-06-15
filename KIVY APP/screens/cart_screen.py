@@ -4,6 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.uix.button import Button
+import os
 
 class CartScreen(Screen):
     def on_pre_enter(self, *args):
@@ -33,9 +34,8 @@ class CartScreen(Screen):
         app = App.get_running_app()
         item_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height='100dp', padding=10, spacing=10)
         
-        # ** THE FIX IS HERE **
-        default_img = os.path.join('..', 'pup_study_style', 'static', 'assets', 'question_mark.png')
-        img_src = product['image_path'] if 'image_path' in product.keys() and product['image_path'] else default_img
+        default_img = os.path.join(os.path.dirname(__file__), '..', '..', 'pup_study_style', 'static', 'assets', 'question_mark.png')
+        img_src = product['image_path'] if 'image_path' in product.keys() and product['image_path'] and os.path.exists(product['image_path'].replace('../', '')) else default_img
         product_image = Image(source=img_src, size_hint_x=None, width='80dp')
 
         details_layout = BoxLayout(orientation='vertical')
