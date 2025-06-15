@@ -22,6 +22,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from create_profiles_table import create_profiles_table
 
 Window.size = (360, 640)
+Window.clearcolor = (0.973, 0.957, 0.957, 1)  # Di ko sure kung sakto yung color sa hex na #f8f4f4 but yeah ayan lumabas nung nag covert ako
 create_profiles_table()
 
 class StudyWithStyleApp(App):
