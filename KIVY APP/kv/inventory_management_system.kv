@@ -1,0 +1,66 @@
+<InventoryManagementScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: "Inventory Management"
+            font_size: '24sp'
+            size_hint_y: None
+            height: '40dp'
+            color: (0.48, 0, 0, 1)
+            bold: True
+
+        GridLayout:
+            cols: 2
+            size_hint_y: None
+            height: '160dp'
+            spacing: 5
+            Label:
+                text: "Item ID"
+            TextInput:
+                id: item_id_input
+            Label:
+                text: "Name"
+            TextInput:
+                id: item_name_input
+            Label:
+                text: "Quantity"
+            TextInput:
+                id: quantity_input
+            Label:
+                text: "Price"
+            TextInput:
+                id: price_input
+
+        BoxLayout:
+            size_hint_y: None
+            height: '40dp'
+            spacing: 10
+            Button:
+                text: "Add"
+                on_release: root.add_item()
+            Button:
+                text: "Update"
+                on_release: root.update_item()
+            Button:
+                text: "Delete"
+                on_release: root.delete_item()
+            Button:
+                text: "View"
+                on_release: root.view_items()
+
+        ScrollView:
+            GridLayout:
+                id: inventory_list
+                cols: 4
+                size_hint_y: None
+                height: self.minimum_height
+
+        Button:
+            text: "Back"
+            size_hint_y: None
+            height: '40dp'
+            on_release: app.root.current = 'home'
+

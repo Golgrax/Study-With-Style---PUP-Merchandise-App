@@ -1,0 +1,91 @@
+#:import ProductItem widgets.product_item.ProductItem
+
+<HomeScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            size_hint_y: None
+            height: '60dp'
+            padding: 10
+            spacing: 15
+            Image:
+                source: '../pup_study_style/static/assets/pup_logo.png'
+                size_hint_x: None
+                width: '120dp'
+            Widget:
+            Button:
+                background_normal: '../pup_study_style/static/assets/cart_icon.png'
+                background_down: '../pup_study_style/static/assets/cart_icon.png'
+                size_hint: None, None
+                size: '40dp', '40dp'
+                on_release: app.root.current = 'cart'
+            Button:
+                background_normal: '../pup_study_style/static/assets/profile_icon.png'
+                background_down: '../pup_study_style/static/assets/profile_icon.png'
+                size_hint: None, None
+                size: '40dp', '40dp'
+                on_release: app.on_profile_button()
+
+        ScrollView:
+            do_scroll_x: False
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                padding: 10
+                spacing: 15
+
+                Label:
+                    text: 'Best Seller'
+                    font_size: '18sp'
+                    bold: True
+                    color: (0.48, 0, 0, 1)
+                    size_hint_y: None
+                    height: '30dp'
+                    halign: 'left'
+                    text_size: self.size
+                Image:
+                    id: best_seller_image
+                    source: '../pup_study_style/static/assets/question_mark.png'
+                    size_hint_y: None
+                    height: '150dp'
+                Label:
+                    id: best_seller_label
+                    text: 'Loading...'
+                    font_size: '16sp'
+                    color: (0.48, 0, 0, 1)
+                    size_hint_y: None
+                    height: '25dp'
+
+                Label:
+                    text: 'All Products'
+                    font_size: '18sp'
+                    bold: True
+                    color: (0.48, 0, 0, 1)
+                    size_hint_y: None
+                    height: '30dp'
+                    halign: 'left'
+                    text_size: self.size
+
+                GridLayout:
+                    id: product_list
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: 10
+
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            spacing: 10
+            padding: 5
+            Button:
+                text: "Order History"
+                on_release: app.root.current = 'order_history'
+            Button:
+                text: "Contact Us"
+                on_release: app.root.current = 'contact_us'
+            Button:
+                text: "Inventory"
+                on_release: app.root.current = 'inventory_management'

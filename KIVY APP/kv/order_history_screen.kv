@@ -1,0 +1,44 @@
+<OrderHistoryScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: "My Order History"
+            font_size: '24sp'
+            size_hint_y: None
+            height: '40dp'
+            color: (0.48, 0, 0, 1)
+            bold: True
+
+        GridLayout:
+            cols: 4
+            size_hint_y: None
+            height: '30dp'
+            Label:
+                text: "Ref No"
+                bold: True
+            Label:
+                text: "Status"
+                bold: True
+            Label:
+                text: "Quantity"
+                bold: True
+            Label:
+                text: "Payment"
+                bold: True
+
+        ScrollView:
+            GridLayout:
+                id: order_history_list
+                cols: 4
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 5
+
+        Button:
+            text: "Back to Home"
+            size_hint_y: None
+            height: '40dp'
+            on_release: app.root.current = 'home'

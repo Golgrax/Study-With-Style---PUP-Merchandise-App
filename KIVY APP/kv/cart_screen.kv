@@ -1,0 +1,41 @@
+<CartScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: "Shopping Cart"
+            font_size: '24sp'
+            size_hint_y: None
+            height: '40dp'
+            color: (0.48, 0, 0, 1)
+            bold: True
+
+        ScrollView:
+            do_scroll_x: False
+            GridLayout:
+                id: cart_list
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+
+        Label:
+            id: total_label
+            text: "Total: ₱0.00"
+            font_size: '18sp'
+            bold: True
+            size_hint_y: None
+            height: '30dp'
+
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            spacing: 10
+            Button:
+                text: "Continue Shopping"
+                on_release: app.root.current = 'home'
+            Button:
+                text: "Checkout"
+                on_release: app.root.current = 'checkout'

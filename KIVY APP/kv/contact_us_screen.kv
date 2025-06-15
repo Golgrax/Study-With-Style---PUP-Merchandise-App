@@ -1,0 +1,38 @@
+<ContactUsScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+        Label:
+            text: "Contact Us"
+            font_size: '24sp'
+            size_hint_y: None
+            height: '40dp'
+            color: (0.48, 0, 0, 1)
+            bold: True
+
+        TextInput:
+            id: name_input
+            hint_text: "Your Name"
+            size_hint_y: None
+            height: '40dp'
+        TextInput:
+            id: email_input
+            hint_text: "Your Email"
+            size_hint_y: None
+            height: '40dp'
+        TextInput:
+            id: message_input
+            hint_text: "Your Message"
+
+        BoxLayout:
+            size_hint_y: None
+            height: '40dp'
+            spacing: 10
+            Button:
+                text: "Back"
+                on_release: app.root.current = 'home'
+            Button:
+                text: "Submit"
+                on_release: root.submit_contact()

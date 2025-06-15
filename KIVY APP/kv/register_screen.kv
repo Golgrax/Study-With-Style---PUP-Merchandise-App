@@ -1,0 +1,61 @@
+<RegisterScreen>:
+    name_input: name_input
+    email_input: email_input
+    username_input: username_input
+    password_input: password_input
+    confirm_password_input: confirm_password_input
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+        Label:
+            text: "Mula Sayo Para Sa Bayan"
+            font_size: '20sp'
+            color: (0.48, 0, 0, 1)
+            bold: True
+            size_hint_y: None
+            height: '40dp'
+
+        TextInput:
+            id: name_input
+            hint_text: "Name"
+            size_hint_y: None
+            height: '40dp'
+
+        TextInput:
+            id: email_input
+            hint_text: "Email (example@iskolarngbayan.pup.edu.ph)"
+            size_hint_y: None
+            height: '40dp'
+
+        TextInput:
+            id: username_input
+            hint_text: "Username"
+            size_hint_y: None
+            height: '40dp'
+
+        TextInput:
+            id: password_input
+            hint_text: "Password"
+            password: True
+            size_hint_y: None
+            height: '40dp'
+
+        TextInput:
+            id: confirm_password_input
+            hint_text: "Confirm Password"
+            password: True
+            size_hint_y: None
+            height: '40dp'
+
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            spacing: 10
+            Button:
+                text: "Register"
+                on_release: root.do_register()
+            Button:
+                text: "Back to Login"
+                on_release: app.root.current = 'login'

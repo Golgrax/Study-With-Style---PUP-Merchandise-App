@@ -1,0 +1,117 @@
+<ProfileScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 15
+
+        # Top Section
+        Image:
+            source: '../pup_study_style/static/assets/profile_icon.png'
+            size_hint_y: None
+            height: '100dp'
+
+        Label:
+            text: "Hi, " + root.username + "!" if root.username else "Hi, Guest!"
+            font_size: '20sp'
+            color: (0.48, 0, 0, 1)
+            bold: True
+            size_hint_y: None
+            height: '30dp'
+
+        Label:
+            id: name_label
+            text: "Name: Loading..." # Populated by python
+            size_hint_y: None
+            height: self.texture_size[1]
+            font_size: '16sp'
+
+        # Address 1 Box
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height
+            padding: 10
+            spacing: 5
+            canvas.before:
+                Color:
+                    rgba: (0.95, 0.95, 0.95, 1)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10]
+            Label:
+                text: "Address 1"
+                font_size: '16sp'
+                bold: True
+                size_hint_y: None
+                height: '25dp'
+                halign: 'left'
+                text_size: self.width, None
+            Label:
+                id: address1_label
+                text: 'Not set' # Populated by python
+                halign: 'left'
+                text_size: self.width, None
+                size_hint_y: None
+                height: self.texture_size[1]
+            Label:
+                id: contact1_label
+                text: 'Contact: Not set' # Populated by python
+                halign: 'left'
+                text_size: self.width, None
+                size_hint_y: None
+                height: self.texture_size[1]
+
+        # Address 2 Box
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height
+            padding: 10
+            spacing: 5
+            canvas.before:
+                Color:
+                    rgba: (0.95, 0.95, 0.95, 1)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10]
+            Label:
+                text: "Address 2"
+                font_size: '16sp'
+                bold: True
+                size_hint_y: None
+                height: '25dp'
+                halign: 'left'
+                text_size: self.width, None
+            Label:
+                id: address2_label
+                text: 'Not set' # Populated by python
+                halign: 'left'
+                text_size: self.width, None
+                size_hint_y: None
+                height: self.texture_size[1]
+            Label:
+                id: contact2_label
+                text: 'Contact: Not set' # Populated by python
+                halign: 'left'
+                text_size: self.width, None
+                size_hint_y: None
+                height: self.texture_size[1]
+
+        Widget: # Spacer to push buttons to the bottom
+
+        # Bottom Buttons
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            spacing: 10
+            Button:
+                text: "Home"
+                on_release: app.root.current = 'home'
+            Button:
+                text: "Edit Profile"
+                on_release: app.root.current = 'edit_profile'
+            Button:
+                text: "Log Out"
+                on_release: root.logout()

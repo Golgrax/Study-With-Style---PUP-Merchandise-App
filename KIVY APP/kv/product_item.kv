@@ -1,0 +1,50 @@
+<ProductItem>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: '120dp'
+    padding: 10
+    spacing: 10
+    canvas.before:
+        Color:
+            rgba: (0.95, 0.95, 0.95, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10]
+
+    Image:
+        source: root.image_source if root.image_source else '../pup_study_style/static/assets/question_mark.png'
+        size_hint_x: None
+        width: '100dp'
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 5
+        Label:
+            text: root.product_name
+            font_size: '16sp'
+            bold: True
+            color: (0.48, 0, 0, 1)
+            halign: 'left'
+            valign: 'top'
+            text_size: self.width, None
+        Label:
+            text: root.product_price
+            font_size: '14sp'
+            color: (0.48, 0, 0, 1)
+            halign: 'left'
+            valign: 'top'
+            text_size: self.width, None
+        Widget
+        BoxLayout:
+            size_hint_y: None
+            height: '35dp'
+            spacing: 10
+            Button:
+                text: "Add to Cart"
+                font_size: '12sp'
+                on_release: root.add_to_cart()
+            Button:
+                text: "Buy Now"
+                font_size: '12sp'
+                on_release: root.buy_now()

@@ -1,0 +1,52 @@
+<EditProfileScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: "Edit Profile"
+            font_size: '20sp'
+            bold: True
+            color: (0.48, 0, 0, 1)
+            size_hint_y: None
+            height: '40dp'
+
+        TextInput:
+            id: name_input
+            hint_text: "Name"
+            size_hint_y: None
+            height: '40dp'
+        TextInput:
+            id: address1_input
+            hint_text: "Address 1"
+            size_hint_y: None
+            height: '40dp'
+        TextInput:
+            id: contact1_input
+            hint_text: "Contact 1"
+            size_hint_y: None
+            height: '40dp'
+        TextInput:
+            id: address2_input
+            hint_text: "Address 2"
+            size_hint_y: None
+            height: '40dp'
+        TextInput:
+            id: contact2_input
+            hint_text: "Contact 2"
+            size_hint_y: None
+            height: '40dp'
+            
+        Widget
+        
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            spacing: 10
+            Button:
+                text: "Cancel"
+                on_release: app.root.current = 'profile'
+            Button:
+                text: "Save"
+                on_release: root.save_profile()
