@@ -52,5 +52,15 @@ CREATE TABLE IF NOT EXISTS users (
 
 
 -- mico's table ^^^^^
+-- eewww mayabang na vibe coder, walang knowledge and security daw yung workzeug wahahah also if you mean yung submodule well pwedeng may point ka kasi for encryption and security, pero wahahah mali ka parin
+-- no need to be so defensive, just saying that the workzeug is not a good choice for encryption and security, but if you want to use it, go ahead, it's your choice so di ko gagalawin yang dalawa para may contributions ka with your AI chatbot wahahah
+-- bumuhat ka ng sarili mong table wahahah
+-- mico's table from the AI chatbot, sira-sira pa.
+-- skill issue, di marunong kahit git pull and push, manual nag upload wahahah tapos pati cache sinama meaning wala talagang alam sa git wahahah
 
 
+-- next time if you want to contribute, make sure you know how to use git properly, and don't just upload files manually, it's not a good practice and can cause issues in the future, so learn git first before contributing wahahah
+-- also wag ka nangmamaliit ng mga tao na di mo kilala (irregular students), it's not a good attitude and can lead to conflicts, so be respectful and professional in your contributions
+-- balik ka grade 1 boy
+-- napuyat sa AI chatbot, di na natulog, nag upload lang ng files manually, tapos mayabang pa, wahahah
+-- once na makita kita deretso kita kay director, di ka na makakapag enroll dito sa school (recorded ko lahat ng proofs kung pano ka manapak and also copying my repo breaking my MIT licensure. isa pa kahit delete mo yung repo mo or edit mo para di halata pag ka AI anjaan parin yung commits mo, kaya rin kita ipahiya sa ibat-ibang IT industries i-leak mga katangahan mo), so be careful with your actions and words, and think before you speak or act, it's important to be responsible and mature naman and dont be abno ha, thank you!
