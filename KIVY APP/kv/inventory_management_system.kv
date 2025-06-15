@@ -15,46 +15,80 @@
         GridLayout:
             cols: 2
             size_hint_y: None
-            height: '200dp'
-            spacing: 5
+            height: self.minimum_height
+            spacing: 10
+            
             Label:
-                text: "Item ID"
-                color: 0.2, 0.2, 0.2, 1
+                text: "Item ID (for Load/Delete)"
+                color: (0.2, 0.2, 0.2, 1)
             TextInput:
                 id: item_id_input
+                hint_text: "Enter ID and press 'Load'"
+            
             Label:
                 text: "Name"
-                color: 0.2, 0.2, 0.2, 1
+                color: (0.2, 0.2, 0.2, 1)
             TextInput:
                 id: item_name_input
+            
             Label:
                 text: "Quantity"
-                color: 0.2, 0.2, 0.2, 1
+                color: (0.2, 0.2, 0.2, 1)
             TextInput:
                 id: quantity_input
+            
             Label:
                 text: "Price"
-                color: 0.2, 0.2, 0.2, 1
+                color: (0.2, 0.2, 0.2, 1)
             TextInput:
                 id: price_input
+
+            Button:
+                text: "Select Image"
+                on_release: root.open_file_chooser()
+            Label:
+                id: image_path_label
+                text: "No image selected"
+                color: (0.2, 0.2, 0.2, 1)
 
         BoxLayout:
             size_hint_y: None
             height: '40dp'
             spacing: 10
             Button:
-                text: "Add"
+                text: "Add New"
                 on_release: root.add_item()
             Button:
-                text: "Update"
+                text: "Load Item"
+                on_release: root.load_item_for_update()
+            Button:
+                text: "Save Update"
                 on_release: root.update_item()
             Button:
                 text: "Delete"
                 on_release: root.delete_item()
-            Button:
-                text: "View"
-                on_release: root.view_items()
 
+        GridLayout:
+            cols: 4
+            size_hint_y: None
+            height: '30dp'
+            Label:
+                text: "ID"
+                bold: True
+                color: (0.1, 0.1, 0.1, 1)
+            Label:
+                text: "Name"
+                bold: True
+                color: (0.1, 0.1, 0.1, 1)
+            Label:
+                text: "Stock"
+                bold: True
+                color: (0.1, 0.1, 0.1, 1)
+            Label:
+                text: "Price"
+                bold: True
+                color: (0.1, 0.1, 0.1, 1)
+                
         ScrollView:
             GridLayout:
                 id: inventory_list
