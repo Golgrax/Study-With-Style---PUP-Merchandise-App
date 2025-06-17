@@ -10,10 +10,12 @@ class HomeScreen(Screen):
     db_manager = DatabaseManager()
     best_seller_id = None
 
-    current_dir = os.path.dirname(os.path.abspath(__file__)) 
-    project_root = os.path.abspath(os.path.join(current_dir, '..'))
-    assets_path = os.path.join(os.path.dirname(__file__), '..', 'assets')
-    default_img = os.path.join(assets_path, 'question_mark.png')
+    def __init__(self, **kwargs):
+        super(HomeScreen, self).__init__(**kwargs)
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        self.project_root = os.path.abspath(os.path.join(current_dir, '..'))
+        self.assets_path = os.path.join(self.project_root, 'assets')
+        self.default_img = os.path.join(self.assets_path, 'question_mark.png')
 
     def on_pre_enter(self, *args):
         app = App.get_running_app()
@@ -39,15 +41,15 @@ class HomeScreen(Screen):
             if best_seller_button: best_seller_button.disabled = False
 
             if best_seller_image:
+                source = self.default_img
                 img_path_from_db = best_seller['image_path'] if 'image_path' in best_seller.keys() else None
+                
                 if img_path_from_db:
-                    full_img_path = os.path.abspath(os.path.join(self.assets_path, os.path.basename(img_path_from_db)))
-                    if os.path.exists(full_img_path):
-                        best_seller_image.source = full_img_path
-                    else:
-                        best_seller_image.source = self.default_img
-                else:
-                    best_seller_image.source = self.default_img
+                    full_img_path_to_check = os.path.join(self.project_root, img_path_from_db)
+                    if os.path.exists(full_img_path_to_check):
+                        source = full_img_path_to_check
+                
+                best_seller_image.source = source
             
             if best_seller_label:
                 best_seller_label.text = best_seller['name']
@@ -85,9 +87,9 @@ class HomeScreen(Screen):
             img_path_from_db = product['image_path'] if 'image_path' in product.keys() else None
             
             if img_path_from_db:
-                full_img_path = os.path.abspath(os.path.join(self.assets_path, os.path.basename(img_path_from_db)))
-                if os.path.exists(full_img_path):
-                    source = full_img_path
+                full_img_path_to_check = os.path.join(self.project_root, img_path_from_db)
+                if os.path.exists(full_img_path_to_check):
+                    source = full_img_path_to_check
             
             item = ProductItem(
                 product_id=product['id'],
