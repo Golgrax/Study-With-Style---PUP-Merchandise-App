@@ -8,6 +8,36 @@ class HomeScreen(Screen):
     db_manager = DatabaseManager()
 
     def on_pre_enter(self, *args):
+        app = App.get_running_app()
+        
+        order_history_btn = self.ids.get('order_history_button')
+        contact_us_btn = self.ids.get('contact_us_button')
+        back_to_inventory_btn = self.ids.get('back_to_inventory_button')
+
+        if app.is_admin:
+            order_history_btn.opacity = 0
+            order_history_btn.size_hint_x = 0
+            order_history_btn.disabled = True
+            
+            contact_us_btn.opacity = 0
+            contact_us_btn.size_hint_x = 0
+            contact_us_btn.disabled = True
+            
+            back_to_inventory_btn.opacity = 1
+            back_to_inventory_btn.size_hint_x = 1
+            back_to_inventory_btn.disabled = False
+        else:
+            order_history_btn.opacity = 1
+            order_history_btn.size_hint_x = 1
+            order_history_btn.disabled = False
+            
+            contact_us_btn.opacity = 1
+            contact_us_btn.size_hint_x = 1
+            contact_us_btn.disabled = False
+            
+            back_to_inventory_btn.opacity = 0
+            back_to_inventory_btn.size_hint_x = 0
+            back_to_inventory_btn.disabled = True
              
         best_seller = self.db_manager.fetch_best_seller()
         default_img = os.path.join(os.path.dirname(__file__), '..', '..', 'pup_study_style', 'static', 'assets', 'question_mark.png')

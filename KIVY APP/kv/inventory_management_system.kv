@@ -31,7 +31,6 @@
                     id: item_id_input
                     size_hint_x: 0.6
                     hint_text: "Enter ID"
-
             BoxLayout:
                 size_hint_y: None
                 height: '40dp'
@@ -44,7 +43,6 @@
                 TextInput:
                     id: item_name_input
                     size_hint_x: 0.6
-
             BoxLayout:
                 size_hint_y: None
                 height: '40dp'
@@ -57,7 +55,6 @@
                 TextInput:
                     id: quantity_input
                     size_hint_x: 0.6
-
             BoxLayout:
                 size_hint_y: None
                 height: '40dp'
@@ -70,7 +67,6 @@
                 TextInput:
                     id: price_input
                     size_hint_x: 0.6
-            
             BoxLayout:
                 size_hint_y: None
                 height: '40dp'
@@ -134,6 +130,7 @@
                 row_force_default: True
 
         BoxLayout:
+            id: admin_nav
             size_hint_y: None
             height: '40dp'
             spacing: 10
@@ -146,5 +143,3 @@
                 text: "Log Out"
                 background_color: (0.8, 0.2, 0.2, 1)
                 on_release: root.logout()
-
-                # OKAY NA
