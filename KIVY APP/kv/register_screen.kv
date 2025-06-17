@@ -4,58 +4,72 @@
     username_input: username_input
     password_input: password_input
     confirm_password_input: confirm_password_input
-    BoxLayout:
-        orientation: 'vertical'
-        padding: 20
-        spacing: 10
 
-        Label:
-            text: "Mula Sayo Para Sa Bayan"
-            font_size: '20sp'
-            color: (0.48, 0, 0, 1)
-            bold: True
-            size_hint_y: None
-            height: '40dp'
+    Image:
+        source: '../pup_study_style/static/assets/pup_logo.png'
+        size_hint: None, None
+        size: '130dp', '130dp'
+        pos_hint: {'center_x': 0.5, 'top': 0.95}
 
-        TextInput:
-            id: name_input
-            hint_text: "Name"
-            size_hint_y: None
-            height: '40dp'
-
-        TextInput:
-            id: email_input
-            hint_text: "Email (example@iskolarngbayan.pup.edu.ph)"
-            size_hint_y: None
-            height: '40dp'
-
-        TextInput:
-            id: username_input
-            hint_text: "Username"
-            size_hint_y: None
-            height: '40dp'
-
-        TextInput:
-            id: password_input
-            hint_text: "Password"
-            password: True
-            size_hint_y: None
-            height: '40dp'
-
-        TextInput:
-            id: confirm_password_input
-            hint_text: "Confirm Password"
-            password: True
-            size_hint_y: None
-            height: '40dp'
-
+    ScrollView:
+        size_hint: 0.85, None
+        height: min(self.parent.height * 0.7, 500)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.45}
+        
         BoxLayout:
+            orientation: 'vertical'
             size_hint_y: None
-            height: '50dp'
+            height: self.minimum_height
+            padding: 20
             spacing: 10
-            Button:
-                text: "Register"
-                on_release: root.do_register()
-            Button:
-                text: "Back to Login"
-                on_release: app.root.current = 'login'
+
+            Label:
+                text: "Mula Sayo Para Sa Bayan"
+                font_size: '20sp'
+                color: (0.48, 0, 0, 1)
+                bold: True
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            TextInput:
+                id: name_input
+                hint_text: "Name"
+                size_hint_y: None
+                height: '40dp'
+
+            TextInput:
+                id: email_input
+                hint_text: "Email (example@iskolarngbayan.pup.edu.ph)"
+                size_hint_y: None
+                height: '40dp'
+
+            TextInput:
+                id: username_input
+                hint_text: "Username"
+                size_hint_y: None
+                height: '40dp'
+
+            TextInput:
+                id: password_input
+                hint_text: "Password"
+                password: True
+                size_hint_y: None
+                height: '40dp'
+
+            TextInput:
+                id: confirm_password_input
+                hint_text: "Confirm Password"
+                password: True
+                size_hint_y: None
+                height: '40dp'
+
+            BoxLayout:
+                size_hint_y: None
+                height: '50dp'
+                spacing: 10
+                Button:
+                    text: "Register"
+                    on_release: root.do_register()
+                Button:
+                    text: "Back to Login"
+                    on_release: app.root.current = 'login'
