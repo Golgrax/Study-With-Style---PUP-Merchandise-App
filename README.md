@@ -1,81 +1,133 @@
-# py-cute
+# Study With Style - PUP Merchandise App
 
-Hello po! Ito yung web app para sa PUP Study with Style. Simple lang to, ginawa gamit ang Python Flask at Dominate para sa pagbuo ng mga page kasi maarti prof niyo gusto pure Python haha so here di na nag django and no HTML/CSS file format.
+Ang **Study With Style** is a e-commerce mobile application na binuo gamit ang Kivy framework ng Python. This is a sample online store para sa pagbenta ng mga merchandise na may temang PUP (Polytechnic University of the Philippines).
 
-## Ano Na Ba Meron Dito? (goods o bulok?)
 
-*   **Login at Register:** Gumawa ng account at mag-login gamit ang sariling credentials.
-*   **Tingin ng Products ni Red:** Makikita mo ang listahan ng mga tinda tulad ng lanyards at tote bags, dynamically loaded mula sa database.
-*   **Shopping Carts:** Maglagay ng items sa cart, i-update quantity, at tanggalin kung gusto mo.
-*   **Checkout:** Kumpletuhin ang order gamit ang checkout process (currently placeholder, pero ready for integration ng payment).
-*   **Profile:** Tingnan at i-edit ang basic info mo.
-*   **Order History:** Listahan ng lahat ng orders mo, real data na galing sa database.
-*   **Contact Us:** Mag-send ng message sa admin (messages stored sa database for admin review).
-*   **Admin Inventory:** Admins can view, add, edit, and delete products; manage stocks at tingnan ang lahat ng orders.
+## Mga Features
 
-## Paano Gagawin Ko Dito!? (Steps)
+*   **User Authentication:** Secure na pag-login at pag-register para sa mga user.
+*   **Admin Role:** Special na 'admin' user na may access sa inventory management.
+*   **Product Browsing:** Tingnan mga products, kasama ang "Best Seller" section.
+*   **Shopping Cart:** Magdagdag, magbawas, or mag-remove ng mga product sa cart.
+*   **Inventory Management (Admin Only):** Mag-add, mag-update, and mag-delete ng mga product, kasama ang pag-upload ng product images.
+*   **Checkout System:** I-place yung order, na nagbabawas ng stock mula sa inventory.
+*   **Profile Management:** I-update ang personal info tulad ng address at contact number.
+*   **Order History:** Tingnan ang mga nakaraang order (basic implementation).
 
-Sundan lang to para mapagana mo sa laptop mo benz (P.S. Di ako sure lalo't Windows and iyong OS).
+## Tech Stack
 
-**Kailangan Mo Muna:**
+*   **Framework:** Kivy (Python)
+*   **Database:** SQLite3
+*   **Password Hashing:** Werkzeug (with a fallback to hashlib) MICO's IDEA?
 
-1.  **Python:** Dapat meron kang Python (version 3.8 pataas siguro okay na).
-2.  **Pip:** Pang-install ng mga kailangan na packages.
+---
 
-**Mga Steps:**
+## How to setup and run
 
-1.  **Download or Clone:**
-    *   Kung na-download mo as ZIP, i-extract mo.
-    *   Kung Git, i-clone mo: `git clone https://github.com/Golgrax/py-cute.git`
+ito yunga mga step para i-run ang application sa iyong computer. (Or just download the APK file from the [Releases])
 
-2.  **Punta sa Folder:**
-    *   Buksan mo yung terminal or command prompt.
-    *   Pumunta ka sa `py-cute` folder. Example: `cd path/to/py-cute`
+### for LINUX
 
-3.  **Install ng mga Kailangan (Dependencies):**
-    *   Sa terminal, type mo to tapos Enter:
-        ```bash
-        pip install Flask dominate Werkzeug click
-        ```
-    *   Hintayin mo lang matapos mag-install.
 
-4.  **Setup ng Database (Isang Beses Lang sa Simula):**
-    *   Sa `py-cute` folder pa rin, type mo to sa terminal tapos Enter:
-        ```bash
-        flask --app pup_study_style:create_app init-db
-        ```
-    *   Gagawa yan ng database file at maglalagay ng ilang sample na produkto. Dapat may makita kang "Initialized the database" messages.
+**Step 1: clone Repository**
+Buksan ang iyong terminal at i-clone ang project.
+```bash
+git clone https://github.com/AfgunIsGun/yeepee.git
+cd yeepee
+```
 
-5.  **Patakbuhin ang App:**
-    *   Sa terminal pa rin, type mo to tapos Enter:
-        ```bash
-        python run.py
-        ```
-    *   May makikita kang message na parang ganito: `* Running on http://127.0.0.1:5000/`
+**Step 2: Gumawa ng Virtual Environment**
+Magandang practice na gumamit ng virtual environment para sa mga Python projects.
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+Makikita mo ang `(venv)` sa simula ng iyong terminal prompt.
 
-6.  **Buksan sa Browser:**
-    *   Buksan mo yung web browser mo (Chrome, Firefox, etc.).
-    *   Punta ka sa address na lumabas sa terminal, or i-type mo `http://127.0.0.1:5000/`.
-    *   Dapat makita mo na yung login page.
+**Step 3: I-install ang mga Dependencies**
+I-install muna ang Kivy at ang mga system libraries na kailangan nito.
+```bash
+# Para sa mga system dependencies ng Kivy
+sudo apt-get update
+sudo apt-get install -y \
+    python3-pip \
+    build-essential \
+    git \
+    python3 \
+    python3-dev \
+    libsdl2-dev \
+    libsdl2-image-dev \
+    libsdl2-mixer-dev \
+    libsdl2-ttf-dev \
+    libportmidi-dev \
+    libswscale-dev \
+    libavformat-dev \
+    libavcodec-dev \
+    zlib1g-dev \
+    libgstreamer1.0-dev \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-good
 
-## Mga Folder at Files (Para Alam Mo Lang)
+pip install -r requirements.txt
+```
 
-*   `pup_study_style/`: Dito nakalagay yung mismong code ng app.
-    *   `__init__.py`: Setup ng Flask app at routes.
-    *   `db.py`: Database models at functions.
-    *   `ui_utils.py`: Utilities para sa page generation gamit ang Dominate.
-    *   `*_routes.py`: Lahat ng routes para sa iba't ibang features (login, products, cart, admin, etc.).
-    *   `static/`: Images (`assets/` [click mo 'to](https://github.com/Golgrax/py-cute/tree/main/pup_study_style/static/assets) ) at custom font (`RocaOne.ttf`).
-*   `schema.sql`: Database schema.
-*   `run.py`: Pang-start ng app.
-*   `README.md`: Ito yung binabasa mo ngayon. :)
+**Step 4: I-setup ang Database at Gumawa ng Admin User**
+Ito ay kailangan lang gawin sa unang beses.
+```bash
+# Papatakbuhin nito ang script para gumawa ng tables at admin user
+python create_admin.py
+```
+*   **Admin Username:** `admin`
+*   **Admin Password:** `admin`
 
-## Sa Susunod (Future Improvements)
+**Step 5: Patakbuhin ang Main Application**
+Ready ka na!
+```bash
+python main.py
+```
 
-*   I-improve pa ang UI/UX gamit ang wireframes at mas magandang design.
-*   Integrate real payment processing sa checkout.
-*   Expand admin features (user management, order fulfillment, analytics).
-*   Ilagay lahat ng product images sa assets/ folder.
+### Para sa mga **Windows** Users
 
-### GOOD LUCK GUYS!
+Medyo iba ang pag-install ng Kivy sa Windows.
 
+**Step 1: I-clone ang Repository**
+Gamit ang Git Bash, Command Prompt, o PowerShell.
+```bash
+git clone https://github.com/AfgunIsGun/yeepee.git
+cd yeepee
+```
+
+**Step 2: Gumawa ng Virtual Environment**
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+Makikita mo ang `(venv)` sa simula ng iyong command prompt.
+
+**Step 3: I-install ang mga Dependencies**
+Sa Windows, kailangan mong i-install muna ang Kivy bago ang ibang packages sa `requirements.txt`.
+```bash
+# I-update ang pip
+python -m pip install --upgrade pip
+
+# I-install ang Kivy
+python -m pip install kivy[base] kivy_examples
+
+# Ngayon, i-install ang iba pang packages
+pip install -r requirements.txt
+```
+
+**Step 4: I-setup ang Database at Gumawa ng Admin User**
+Kailangan lang gawin sa unang beses.
+```bash
+# Papatakbuhin nito ang script para gumawa ng tables at admin user
+python create_admin.py
+```
+*   **Admin Username:** `admin`
+*   **Admin Password:** `admin`
+
+**Step 5: Patakbuhin ang Main Application**
+Ready ka na!
+```bash
+python main.py
+```
