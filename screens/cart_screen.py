@@ -9,14 +9,18 @@ import os
 class CartScreen(Screen):
     def __init__(self, **kwargs):
         super(CartScreen, self).__init__(**kwargs)
-        self.project_root = os.getcwd()
+        # Get the directory where main.py is running from (our project root)
+        self.project_root = os.getcwd() 
+        # Build the correct absolute path to the assets folder
         self.assets_path = os.path.join(self.project_root, 'assets')
         self.default_img = os.path.join(self.assets_path, 'question_mark.png')
 
     def get_image_source(self, db_path):
         """A centralized function to get a valid, absolute image source."""
-        if db_path and os.path.exists(os.path.join(self.project_root, db_path)):
-            return os.path.join(self.project_root, db_path)
+        if db_path:
+            full_path_to_check = os.path.join(self.project_root, db_path)
+            if os.path.exists(full_path_to_check):
+                return full_path_to_check
         return self.default_img
 
     def on_pre_enter(self, *args):
@@ -43,10 +47,10 @@ class CartScreen(Screen):
         self.ids.total_label.text = f"Total: P{total_price:.2f}"
 
     def create_cart_item_widget(self, item, product):
-        app = App.get_running_app()
         item_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height='100dp', padding=10, spacing=10)
         
-        product_image = Image(source=self.get_image_source(product.get('image_path')), size_hint_x=None, width='80dp')
+        image_path = product['image_path'] if 'image_path' in product.keys() else None
+        product_image = Image(source=self.get_image_source(image_path), size_hint_x=None, width='80dp')
         
         details_layout = BoxLayout(orientation='vertical')
         product_label = Label(text=f"{product['name']}", font_size='16sp', halign='left', valign='top', color=(0.1, 0.1, 0.1, 1))
@@ -69,12 +73,13 @@ class CartScreen(Screen):
         return item_layout
 
     def decrease_quantity(self, item):
+        app = App.get_running_app()
         if item['quantity'] > 1:
             item['quantity'] -= 1
         else:
-            App.get_running_app().cart.remove(item)
+            app.cart.remove(item)
         self.populate_cart()
-    
+
     def increase_quantity(self, item):
         item['quantity'] += 1
         self.populate_cart()
