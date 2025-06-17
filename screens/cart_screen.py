@@ -7,10 +7,17 @@ from kivy.uix.button import Button
 import os
 
 class CartScreen(Screen):
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    project_root = os.path.abspath(os.path.join(current_dir, '..', '..'))
-    assets_path = os.path.join(project_root, 'pup_study_style', 'static', 'assets')
-    default_img = os.path.join(assets_path, 'question_mark.png')
+    def __init__(self, **kwargs):
+        super(CartScreen, self).__init__(**kwargs)
+        self.project_root = os.getcwd()
+        self.assets_path = os.path.join(self.project_root, 'assets')
+        self.default_img = os.path.join(self.assets_path, 'question_mark.png')
+
+    def get_image_source(self, db_path):
+        """A centralized function to get a valid, absolute image source."""
+        if db_path and os.path.exists(os.path.join(self.project_root, db_path)):
+            return os.path.join(self.project_root, db_path)
+        return self.default_img
 
     def on_pre_enter(self, *args):
         self.populate_cart()
@@ -39,16 +46,8 @@ class CartScreen(Screen):
         app = App.get_running_app()
         item_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height='100dp', padding=10, spacing=10)
         
-        source = self.default_img
-        img_path_from_db = product['image_path'] if 'image_path' in product.keys() else None
+        product_image = Image(source=self.get_image_source(product.get('image_path')), size_hint_x=None, width='80dp')
         
-        if img_path_from_db:
-            full_img_path = os.path.abspath(os.path.join(self.assets_path, os.path.basename(img_path_from_db)))
-            if os.path.exists(full_img_path):
-                source = full_img_path
-        
-        product_image = Image(source=source, size_hint_x=None, width='80dp')
-
         details_layout = BoxLayout(orientation='vertical')
         product_label = Label(text=f"{product['name']}", font_size='16sp', halign='left', valign='top', color=(0.1, 0.1, 0.1, 1))
         product_label.bind(size=product_label.setter('text_size'))
@@ -75,7 +74,7 @@ class CartScreen(Screen):
         else:
             App.get_running_app().cart.remove(item)
         self.populate_cart()
-
+    
     def increase_quantity(self, item):
         item['quantity'] += 1
         self.populate_cart()

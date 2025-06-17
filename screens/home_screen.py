@@ -12,10 +12,17 @@ class HomeScreen(Screen):
 
     def __init__(self, **kwargs):
         super(HomeScreen, self).__init__(**kwargs)
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        self.project_root = os.path.abspath(os.path.join(current_dir, '..'))
+        self.project_root = os.getcwd() 
         self.assets_path = os.path.join(self.project_root, 'assets')
         self.default_img = os.path.join(self.assets_path, 'question_mark.png')
+
+    def get_image_source(self, db_path):
+        """A centralized function to get a valid, absolute image source."""
+        if db_path:
+            full_path_to_check = os.path.join(self.project_root, db_path)
+            if os.path.exists(full_path_to_check):
+                return full_path_to_check
+        return self.default_img
 
     def on_pre_enter(self, *args):
         app = App.get_running_app()
@@ -31,32 +38,16 @@ class HomeScreen(Screen):
             if admin_nav: admin_nav.height, admin_nav.opacity, admin_nav.disabled = 0, 0, True
         
         best_seller = self.db_manager.fetch_best_seller()
-        
         if best_seller:
             self.best_seller_id = best_seller['id']
-            best_seller_button = self.ids.get('best_seller_button')
-            best_seller_image = self.ids.get('best_seller_image')
-            best_seller_label = self.ids.get('best_seller_label')
-
-            if best_seller_button: best_seller_button.disabled = False
-
-            if best_seller_image:
-                source = self.default_img
-                img_path_from_db = best_seller['image_path'] if 'image_path' in best_seller.keys() else None
-                
-                if img_path_from_db:
-                    full_img_path_to_check = os.path.join(self.project_root, img_path_from_db)
-                    if os.path.exists(full_img_path_to_check):
-                        source = full_img_path_to_check
-                
-                best_seller_image.source = source
-            
-            if best_seller_label:
-                best_seller_label.text = best_seller['name']
+            if self.ids.get('best_seller_button'): self.ids.best_seller_button.disabled = False
+            if self.ids.get('best_seller_image'):
+                self.ids.best_seller_image.source = self.get_image_source(best_seller.get('image_path'))
+            if self.ids.get('best_seller_label'):
+                self.ids.best_seller_label.text = best_seller.get('name', 'N/A')
         else:
             self.best_seller_id = None
-            if self.ids.get('best_seller_button'):
-                self.ids.best_seller_button.disabled = True
+            if self.ids.get('best_seller_button'): self.ids.best_seller_button.disabled = True
         
         self.populate_other_products(self.best_seller_id if self.best_seller_id else -1)
 
@@ -83,18 +74,10 @@ class HomeScreen(Screen):
         other_products = self.db_manager.fetch_other_products(exclude_id)
         
         for product in other_products:
-            source = self.default_img
-            img_path_from_db = product['image_path'] if 'image_path' in product.keys() else None
-            
-            if img_path_from_db:
-                full_img_path_to_check = os.path.join(self.project_root, img_path_from_db)
-                if os.path.exists(full_img_path_to_check):
-                    source = full_img_path_to_check
-            
             item = ProductItem(
                 product_id=product['id'],
                 product_name=product['name'],
                 product_price=f"Price: P{product['price']:.2f}",
-                image_source=source
+                image_source=self.get_image_source(product.get('image_path'))
             )
             product_list.add_widget(item)
