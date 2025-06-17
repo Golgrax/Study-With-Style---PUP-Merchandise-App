@@ -133,11 +133,18 @@
                 row_default_height: '30dp'
                 row_force_default: True
 
-        Button:
+        BoxLayout:
+            size_hint_y: None
+            height: '40dp'
+            spacing: 10
+            
+            Button:
                 text: "View Shop"
                 on_release: app.root.current = 'home'
             
-        Button:
+            Button:
                 text: "Log Out"
-                background_color: (0.8, 0.2, 0.2, 1) # Make it look different
+                background_color: (0.8, 0.2, 0.2, 1)
                 on_release: root.logout()
+
+                # OKAY NA
