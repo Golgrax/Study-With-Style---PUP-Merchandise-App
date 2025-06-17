@@ -28,6 +28,7 @@
                 size: '40dp', '40dp'
                 on_release: app.on_profile_button()
                 border: 0, 0, 0, 0
+                
         ScrollView:
             do_scroll_x: False
             BoxLayout:
@@ -46,18 +47,30 @@
                     height: '30dp'
                     halign: 'left'
                     text_size: self.size
-                Image:
-                    id: best_seller_image
-                    source: '../pup_study_style/static/assets/question_mark.png'
+                
+                Button:
+                    id: best_seller_button
                     size_hint_y: None
-                    height: '150dp'
-                Label:
-                    id: best_seller_label
-                    text: 'Loading...'
-                    font_size: '16sp'
-                    color: (0.48, 0, 0, 1)
-                    size_hint_y: None
-                    height: '25dp'
+                    height: '200dp'
+                    on_release: root.add_best_seller_to_cart()
+                    background_color: 0, 0, 0, 0
+
+                    BoxLayout:
+                        orientation: 'vertical'
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        
+                        Image:
+                            id: best_seller_image
+                            source: '../pup_study_style/static/assets/question_mark.png'
+                            size_hint_y: 0.8
+                            
+                        Label:
+                            id: best_seller_label
+                            text: 'Loading...'
+                            size_hint_y: 0.2
+                            font_size: '16sp'
+                            color: (0.48, 0, 0, 1)
 
                 Label:
                     text: 'All Products'
@@ -86,7 +99,6 @@
             Button:
                 text: "Order History"
                 on_release: app.root.current = 'order_history'
-
             Button:
                 text: "Contact Us"
                 on_release: app.root.current = 'contact_us'
