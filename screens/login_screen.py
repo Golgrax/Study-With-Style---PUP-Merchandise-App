@@ -14,26 +14,43 @@ class LoginScreen(Screen):
     def do_login(self):
         username = self.username.text.strip()
         password = self.password.text.strip()
+        
+        print(f"--- Attempting login for user: '{username}' ---")
         user = self.db_manager.fetch_user(username)
 
-        if user and check_password_hash(user['password_hash'], password):
-            app = App.get_running_app()
-            app.current_user = username
-            app.is_admin = bool(user['is_admin'])
+        if user:
+            print(f"User '{username}' found in database.")
+            print(f"User data: {dict(user)}") 
+            
+            password_match = check_password_hash(user['password_hash'], password)
+            print(f"Password check result: {password_match}")
 
-            if app.is_admin:
-                self.manager.current = "inventory_management"
+            if password_match:
+                app = App.get_running_app()
+                app.current_user = username
+                
+                if 'is_admin' in user.keys():
+                    app.is_admin = bool(user['is_admin'])
+                    print(f"User is_admin flag is: {user['is_admin']} -> Set app.is_admin to {app.is_admin}")
+                else:
+                    app.is_admin = False
+                    print("'is_admin' column not found in user data. Defaulting to non-admin.")
+
+                if app.is_admin:
+                    print("Login successful. Navigating to INVENTORY.")
+                    self.manager.current = "inventory_management"
+                else:
+                    print("Login successful. Navigating to HOME.")
+                    self.manager.current = "home"
             else:
-                self.manager.current = "home"
+                print("Login FAILED: Incorrect password.")
+                self.show_login_failed_popup()
         else:
-            popup = Popup(title="Login Failed",
-                          content=Label(text="Incorrect username or password."),
-                          size_hint=(0.8, 0.3))
-            popup.open()
+            print(f"Login FAILED: User '{username}' not found.")
+            self.show_login_failed_popup()
 
-    def logout(self):
-        app = App.get_running_app()
-        app.current_user = None
-        app.is_admin = False
-        app.cart = []
-        self.manager.current = 'login'
+    def show_login_failed_popup(self):
+        popup = Popup(title="Login Failed",
+                      content=Label(text="Incorrect username or password."),
+                      size_hint=(0.8, 0.3))
+        popup.open()
