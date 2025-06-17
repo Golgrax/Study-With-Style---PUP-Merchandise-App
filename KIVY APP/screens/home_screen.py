@@ -6,15 +6,15 @@ import os
 
 class HomeScreen(Screen):
     db_manager = DatabaseManager()
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    project_root = os.path.abspath(os.path.join(base_dir, '..'))
-    default_img = os.path.join(project_root, 'pup_study_style', 'static', 'assets', 'question_mark.png')
+    current_dir = os.path.dirname(os.path.abspath(__file__)) 
+    project_root = os.path.abspath(os.path.join(current_dir, '..', '..'))
+    assets_path = os.path.join(project_root, 'pup_study_style', 'static', 'assets')
+    default_img = os.path.join(assets_path, 'question_mark.png')
 
     def on_pre_enter(self, *args):
         app = App.get_running_app()
         user_nav = self.ids.get('user_nav')
         admin_nav = self.ids.get('admin_nav')
-
         if app.is_admin:
             if user_nav: user_nav.height, user_nav.opacity, user_nav.disabled = 0, 0, True
             if admin_nav: admin_nav.height, admin_nav.opacity, admin_nav.disabled = '50dp', 1, False
@@ -28,15 +28,16 @@ class HomeScreen(Screen):
             best_seller_image = self.ids.get('best_seller_image')
             best_seller_label = self.ids.get('best_seller_label')
             if best_seller_image:
-                img_path_relative = best_seller['image_path'] if 'image_path' in best_seller.keys() else None
-                if img_path_relative:
-                    img_path_absolute = os.path.abspath(os.path.join(self.project_root, str(img_path_relative).replace('../', '')))
-                else:
-                    img_path_absolute = None
-                if img_path_absolute and os.path.exists(img_path_absolute):
-                    best_seller_image.source = img_path_relative
+                img_path_from_db = best_seller['image_path'] if 'image_path' in best_seller.keys() else None
+                if img_path_from_db:
+                    full_img_path = os.path.abspath(os.path.join(self.assets_path, os.path.basename(img_path_from_db)))
+                    if os.path.exists(full_img_path):
+                        best_seller_image.source = full_img_path
+                    else:
+                        best_seller_image.source = self.default_img
                 else:
                     best_seller_image.source = self.default_img
+            
             if best_seller_label:
                 best_seller_label.text = best_seller['name']
         
@@ -51,15 +52,13 @@ class HomeScreen(Screen):
         other_products = self.db_manager.fetch_other_products(exclude_id)
         
         for product in other_products:
-            img_path_relative = product['image_path'] if 'image_path' in product.keys() else None
-            if img_path_relative:
-                img_path_absolute = os.path.abspath(os.path.join(self.project_root, str(img_path_relative).replace('../', '')))
-            else:
-                img_path_absolute = None
-            if img_path_absolute and os.path.exists(img_path_absolute):
-                source = img_path_relative
-            else:
-                source = self.default_img
+            source = self.default_img
+            img_path_from_db = product['image_path'] if 'image_path' in product.keys() else None
+            
+            if img_path_from_db:
+                full_img_path = os.path.abspath(os.path.join(self.assets_path, os.path.basename(img_path_from_db)))
+                if os.path.exists(full_img_path):
+                    source = full_img_path
             
             item = ProductItem(
                 product_id=product['id'],
