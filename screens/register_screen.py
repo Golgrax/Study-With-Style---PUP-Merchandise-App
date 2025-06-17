@@ -35,20 +35,13 @@ class RegisterScreen(Screen):
             return
 
         password_hash = generate_password_hash(password)
-
-        conn = self.db_manager.get_connection()
-        try:
-            conn.execute(
-                "INSERT INTO users (name, email, username, password_hash, is_admin) VALUES (?, ?, ?, ?, ?)",
-                (name, email, username, password_hash, 0)
-            )
-            conn.commit()
+        success = self.db_manager.insert_user(name, email, username, password_hash)
+        
+        if success:
             self.show_popup("Success", "Registration successful. Please login.")
             self.manager.current = "login"
-        except Exception as e:
-            self.show_popup("Error", f"Registration failed: {e}")
-        finally:
-            conn.close()
+        else:
+            self.show_popup("Error", "Registration failed. Please try again.")
 
     def show_popup(self, title, message):
         popup = Popup(title=title,

@@ -24,12 +24,12 @@ class DatabaseManager:
         conn.close()
         return existing_user is not None
 
-    def insert_user(self, name, email, username, password_hash):
+    def insert_user(self, name, email, username, password_hash, is_admin=0):
         conn = self.get_connection()
         try:
             conn.execute(
-                "INSERT INTO users (name, email, username, password_hash) VALUES (?, ?, ?, ?)",
-                (name, email, username, password_hash)
+                "INSERT INTO users (name, email, username, password_hash, is_admin) VALUES (?, ?, ?, ?, ?)",
+                (name, email, username, password_hash, is_admin)
             )
             conn.commit()
         except sqlite3.IntegrityError:
