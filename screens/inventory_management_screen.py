@@ -13,7 +13,7 @@ from database import DatabaseManager
 class InventoryManagementScreen(Screen):
     db_manager = DatabaseManager()
     selected_image_path = ""
-    assets_folder = os.path.join(os.path.dirname(__file__), '..', 'pup_study_style', 'static', 'assets')
+    assets_folder = os.path.join(os.path.dirname(__file__), '..', 'assets')
     
     def on_pre_enter(self, *args):
         app = App.get_running_app()
@@ -186,7 +186,7 @@ class InventoryManagementScreen(Screen):
 
                 shutil.copy(source_path, destination_path)
                 
-                self.selected_image_path = os.path.join('..', 'pup_study_style', 'static', 'assets', filename).replace("\\", "/")
+                self.selected_image_path = os.path.join('assets', filename).replace("\\", "/")
                 self.ids.image_path_label.text = filename
                 popup.dismiss()
 

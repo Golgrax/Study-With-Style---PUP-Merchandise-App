@@ -12,7 +12,7 @@ class HomeScreen(Screen):
 
     current_dir = os.path.dirname(os.path.abspath(__file__)) 
     project_root = os.path.abspath(os.path.join(current_dir, '..'))
-    assets_path = os.path.join(project_root, 'pup_study_style', 'static', 'assets')
+    assets_path = os.path.join(os.path.dirname(__file__), '..', 'assets')
     default_img = os.path.join(assets_path, 'question_mark.png')
 
     def on_pre_enter(self, *args):
