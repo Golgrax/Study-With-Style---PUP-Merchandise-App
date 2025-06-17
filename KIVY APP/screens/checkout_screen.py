@@ -1,5 +1,10 @@
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
+from database import DatabaseManager
+import random
+import string
 
 class CheckoutScreen(Screen):
     def on_pre_enter(self, *args):
@@ -17,7 +22,6 @@ class CheckoutScreen(Screen):
         for item in cart:
             product = app.get_product_by_id(item['product_id'])
             if product:
-                # ** THE FIX IS HERE **
                 line_price = product['price'] * item['quantity']
                 line = f"{product['name']} x {item['quantity']} = P{line_price:.2f}"
                 summary_lines.append(line)
@@ -29,6 +33,47 @@ class CheckoutScreen(Screen):
 
     def place_order(self):
         app = App.get_running_app()
-        print("Placing order for:", app.cart)
-        app.cart = [] # Clear the cart
-        app.root.current = 'home'
+        cart = app.cart
+        
+        if not cart:
+            Popup(title="Empty Cart",
+                  content=Label(text="Your cart is empty. Cannot place order."),
+                  size_hint=(0.8, 0.3)).open()
+            return
+        
+        total_price = 0
+        total_quantity = 0
+        for item in cart:
+            product = app.get_product_by_id(item['product_id'])
+            if product:
+                total_price += product['price'] * item['quantity']
+                total_quantity += item['quantity']
+        
+        ref_no = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+        
+        db_manager = DatabaseManager()
+        conn = db_manager.get_connection()
+        try:
+            conn.execute(
+                "INSERT INTO orders (ref_no, username, total_price, quantity, payment, status) VALUES (?, ?, ?, ?, ?, ?)",
+                (ref_no, app.current_user, total_price, total_quantity, "Cash on Delivery", "Pending")
+            )
+            conn.commit()
+            
+            app.cart.clear()
+            
+            success_popup = Popup(title="Order Placed",
+                                  content=Label(text=f"Your order has been placed!\nReference No: {ref_no}"),
+                                  size_hint=(0.8, 0.4))
+            success_popup.open()
+            
+            self.manager.current = 'home'
+            
+        except Exception as e:
+            print(f"Error placing order: {e}")
+            Popup(title="Error",
+                  content=Label(text="Could not place your order. Please try again."),
+                  size_hint=(0.8, 0.3)).open()
+        finally:
+            if conn:
+                conn.close()
