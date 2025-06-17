@@ -81,4 +81,4 @@ CREATE TABLE IF NOT EXISTS users (
     username TEXT UNIQUE NOT NULL,
     password_hash TEXT NOT NULL,
     is_admin BOOLEAN NOT NULL DEFAULT 0
-);
+); -- lagyan pa ba talaga info sa users table? parang redundant na kasi may profiles table na, so di ko na nilagyan ng address and contact info dito
