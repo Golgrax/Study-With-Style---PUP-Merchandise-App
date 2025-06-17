@@ -7,6 +7,11 @@ from kivy.uix.button import Button
 import os
 
 class CartScreen(Screen):
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.abspath(os.path.join(current_dir, '..', '..'))
+    assets_path = os.path.join(project_root, 'pup_study_style', 'static', 'assets')
+    default_img = os.path.join(assets_path, 'question_mark.png')
+
     def on_pre_enter(self, *args):
         self.populate_cart()
 
@@ -34,16 +39,20 @@ class CartScreen(Screen):
         app = App.get_running_app()
         item_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height='100dp', padding=10, spacing=10)
         
-        default_img = os.path.join(os.path.dirname(__file__), '..', '..', 'pup_study_style', 'static', 'assets', 'question_mark.png')
-        img_src = product['image_path'] if 'image_path' in product.keys() and product['image_path'] and os.path.exists(product['image_path'].replace('../', '')) else default_img
-        product_image = Image(source=img_src, size_hint_x=None, width='80dp')
+        source = self.default_img
+        img_path_from_db = product['image_path'] if 'image_path' in product.keys() else None
+        
+        if img_path_from_db:
+            full_img_path = os.path.abspath(os.path.join(self.assets_path, os.path.basename(img_path_from_db)))
+            if os.path.exists(full_img_path):
+                source = full_img_path
+        
+        product_image = Image(source=source, size_hint_x=None, width='80dp')
 
         details_layout = BoxLayout(orientation='vertical')
         product_label = Label(text=f"{product['name']}", font_size='16sp', halign='left', valign='top', color=(0.1, 0.1, 0.1, 1))
         product_label.bind(size=product_label.setter('text_size'))
-        
-        price_label = Label(text=f"P{product['price']:.2f}", font_size='14sp', halign='left', valign='top')
-        price_label.bind(size=price_label.setter('text_size'))
+        price_label = Label(text=f"P{product['price']:.2f}", font_size='14sp', halign='left', valign='top', color=(0.1, 0.1, 0.1, 1))
         details_layout.add_widget(product_label)
         details_layout.add_widget(price_label)
 
