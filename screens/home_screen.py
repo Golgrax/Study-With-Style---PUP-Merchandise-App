@@ -10,8 +10,8 @@ class HomeScreen(Screen):
     db_manager = DatabaseManager()
     best_seller_id = None
 
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    project_root = os.path.abspath(os.path.join(current_dir, '..', '..'))
+    current_dir = os.path.dirname(os.path.abspath(__file__)) 
+    project_root = os.path.abspath(os.path.join(current_dir, '..'))
     assets_path = os.path.join(project_root, 'pup_study_style', 'static', 'assets')
     default_img = os.path.join(assets_path, 'question_mark.png')
 

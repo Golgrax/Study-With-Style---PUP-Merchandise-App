@@ -2,7 +2,7 @@ import sqlite3
 import os
 
 def create_profiles_table():
-    db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'database.db')
+    db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database.db')
     sql_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'create_profiles_table.sql')
 
     conn = None

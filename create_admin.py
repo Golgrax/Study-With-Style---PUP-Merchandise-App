@@ -2,7 +2,7 @@ import sqlite3
 import os
 from auth_utils import generate_password_hash
 
-DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'database.db')
+DB_PATH = os.path.join(os.path.dirname(__file__), 'database.db')
 
 def create_admin_user():
     conn = sqlite3.connect(DB_PATH)

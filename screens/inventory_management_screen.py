@@ -13,8 +13,8 @@ from database import DatabaseManager
 class InventoryManagementScreen(Screen):
     db_manager = DatabaseManager()
     selected_image_path = ""
-    assets_folder = os.path.join(os.path.dirname(__file__), '..', '..', 'pup_study_style', 'static', 'assets')
-
+    assets_folder = os.path.join(os.path.dirname(__file__), '..', 'pup_study_style', 'static', 'assets')
+    
     def on_pre_enter(self, *args):
         app = App.get_running_app()
         if not app.is_admin:

@@ -1,10 +1,16 @@
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS profiles;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS users;
+
+
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    username TEXT UNIQUE NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    username TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
-    is_admin BOOLEAN NOT NULL DEFAULT 0
+    is_admin INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS products (
@@ -17,25 +23,15 @@ CREATE TABLE IF NOT EXISTS products (
 );
 
 CREATE TABLE IF NOT EXISTS profiles (
-    username TEXT PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
     name TEXT,
     address1 TEXT,
     contact1 TEXT,
     address2 TEXT,
     contact2 TEXT,
-    FOREIGN KEY (username) REFERENCES users (username)
+    FOREIGN KEY (username) REFERENCES users(username)
 );
-
-CREATE TABLE IF NOT EXISTS orders (
-    ref_no INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL,
-    status TEXT DEFAULT 'Pending',
-    quantity INTEGER,
-    payment TEXT,
-    FOREIGN KEY (username) REFERENCES users (username)
-);
-
-DROP TABLE IF EXISTS orders;
 
 CREATE TABLE IF NOT EXISTS orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

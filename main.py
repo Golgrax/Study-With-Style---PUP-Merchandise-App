@@ -18,7 +18,7 @@ from screens.contact_us_screen import ContactUsScreen
 from screens.inventory_management_screen import InventoryManagementScreen
 
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+# sys.path.append(os.path.join(os.path.dirname(__file__), '..')) no need anymore because tinanggal ko na sa "KIVY APP" directory
 from create_profiles_table import create_profiles_table
 
 Window.size = (360, 640)
