@@ -40,40 +40,55 @@ class CheckoutScreen(Screen):
                   content=Label(text="Your cart is empty. Cannot place order."),
                   size_hint=(0.8, 0.3)).open()
             return
-        
-        total_price = 0
-        total_quantity = 0
-        for item in cart:
-            product = app.get_product_by_id(item['product_id'])
-            if product:
-                total_price += product['price'] * item['quantity']
-                total_quantity += item['quantity']
-        
-        ref_no = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
-        
+            
         db_manager = DatabaseManager()
         conn = db_manager.get_connection()
+        cursor = conn.cursor()
+        
         try:
-            conn.execute(
+            for item in cart:
+                product_id = item['product_id']
+                quantity_ordered = item['quantity']
+                cursor.execute("SELECT name, stock_quantity FROM products WHERE id = ?", (product_id,))
+                product_data = cursor.fetchone()
+                if product_data is None:
+                    raise Exception(f"Product with ID {product_id} not found.")
+                if product_data['stock_quantity'] < quantity_ordered:
+                    raise Exception(f"Not enough stock for {product_data['name']}. "
+                                    f"Required: {quantity_ordered}, Available: {product_data['stock_quantity']}")
+                new_stock = product_data['stock_quantity'] - quantity_ordered
+                cursor.execute("UPDATE products SET stock_quantity = ? WHERE id = ?", (new_stock, product_id))
+
+            total_price = 0
+            total_quantity = 0
+            for item in cart:
+                product = db_manager.fetch_product_by_id(item['product_id'])
+                if product:
+                    total_price += product['price'] * item['quantity']
+                    total_quantity += item['quantity']
+            
+            ref_no = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+            
+            cursor.execute(
                 "INSERT INTO orders (ref_no, username, total_price, quantity, payment, status) VALUES (?, ?, ?, ?, ?, ?)",
-                (ref_no, app.current_user, total_price, total_quantity, "Cash on Delivery", "Pending")
+                (ref_no, app.current_user, total_price, total_quantity, "Cash on Delivery", "Processing")
             )
-            conn.commit()
             
-            app.cart.clear()
+            conn.commit() 
+            app.cart.clear() 
             
-            success_popup = Popup(title="Order Placed",
-                                  content=Label(text=f"Your order has been placed!\nReference No: {ref_no}"),
-                                  size_hint=(0.8, 0.4))
-            success_popup.open()
+            Popup(title="Order Placed",
+                  content=Label(text=f"Your order has been placed!\nReference No: {ref_no}"),
+                  size_hint=(0.8, 0.4)).open()
             
             self.manager.current = 'home'
             
         except Exception as e:
+            conn.rollback()
             print(f"Error placing order: {e}")
-            Popup(title="Error",
-                  content=Label(text="Could not place your order. Please try again."),
-                  size_hint=(0.8, 0.3)).open()
+            Popup(title="Order Error",
+                  content=Label(text=str(e)),
+                  size_hint=(0.8, 0.4)).open()
         finally:
             if conn:
                 conn.close()
