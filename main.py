@@ -71,6 +71,13 @@ class StudyWithStyleApp(App):
         self.cart = []
         self.root.current = 'login'
 
+    def logout(self):
+        """Logs the current user out and resets all session variables."""
+        self.current_user = None
+        self.is_admin = False
+        self.cart = []
+        self.root.current = 'login'
+
     def on_profile_button(self):
         if self.current_user:
             self.root.current = 'profile'
