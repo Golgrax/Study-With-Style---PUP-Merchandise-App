@@ -76,26 +76,28 @@
                     spacing: 10
 
         BoxLayout:
+            id: user_nav
             size_hint_y: None
             height: '50dp'
             spacing: 10
             padding: 5
             
             Button:
-                id: order_history_button
                 text: "Order History"
                 on_release: app.root.current = 'order_history'
 
             Button:
-                id: contact_us_button
                 text: "Contact Us"
                 on_release: app.root.current = 'contact_us'
 
+        BoxLayout:
+            id: admin_nav
+            size_hint_y: None
+            height: 0
+            opacity: 0
+            disabled: True
+            padding: 5
+            
             Button:
-                id: back_to_inventory_button
                 text: "Back to Inventory"
-                # This button is hidden by default
-                opacity: 0
-                size_hint_x: 0
-                disabled: True
                 on_release: app.root.current = 'inventory_management'
