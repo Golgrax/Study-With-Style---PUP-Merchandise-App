@@ -76,12 +76,11 @@
                 height: '40dp'
                 Button:
                     text: "Select Image"
-                    color: 0.1, 0.1, 0.1, 1
                     size_hint_x: 0.4
                     on_release: root.open_file_chooser()
                 Label:
                     id: image_path_label
-                    text: "   No image selected"
+                    text: "No image selected"
                     size_hint_x: 0.6
                     color: 0.1, 0.1, 0.1, 1
                     text_size: self.size
@@ -116,15 +115,19 @@
             Label:
                 text: "ID"
                 bold: True
+                color: 0.1, 0.1, 0.1, 1
             Label:
                 text: "Name"
                 bold: True
+                color: 0.1, 0.1, 0.1, 1
             Label:
                 text: "Stock"
                 bold: True
+                color: 0.1, 0.1, 0.1, 1
             Label:
                 text: "Price"
                 bold: True
+                color: 0.1, 0.1, 0.1, 1
                 
         ScrollView:
             GridLayout:
