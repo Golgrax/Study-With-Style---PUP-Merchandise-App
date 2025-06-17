@@ -16,6 +16,7 @@ from screens.edit_profile_screen import EditProfileScreen
 from screens.order_history_screen import OrderHistoryScreen
 from screens.contact_us_screen import ContactUsScreen
 from screens.inventory_management_screen import InventoryManagementScreen
+from screens.admin_panel_screen import AdminPanelScreen
 
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -27,6 +28,7 @@ create_profiles_table()
 
 class StudyWithStyleApp(App):
     current_user = None
+    is_admin = False
     cart = []
 
     def build(self):
@@ -46,6 +48,7 @@ class StudyWithStyleApp(App):
         sm.add_widget(EditProfileScreen(name="edit_profile"))
         sm.add_widget(OrderHistoryScreen(name="order_history"))
         sm.add_widget(ContactUsScreen(name="contact_us"))
+        sm.add_widget(AdminPanelScreen(name="admin_panel"))
         sm.add_widget(InventoryManagementScreen(name="inventory_management"))
         return sm
 

@@ -1,0 +1,34 @@
+<AdminPanelScreen>:
+    name: 'admin_panel'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 20
+
+        Label:
+            text: "Admin Panel"
+            font_size: '24sp'
+            color: (0.48, 0, 0, 1)
+            bold: True
+            size_hint_y: None
+            height: '40dp'
+
+        Button:
+            text: "Inventory Management"
+            size_hint_y: None
+            height: '50dp'
+            on_release: app.root.current = 'inventory_management'
+
+        Button:
+            text: "View Users (Future)"
+            size_hint_y: None
+            height: '50dp'
+            disabled: True
+
+        Widget: # Spacer
+
+        Button:
+            text: "Back to Home"
+            size_hint_y: None
+            height: '50dp'
+            on_release: app.root.current = 'home'

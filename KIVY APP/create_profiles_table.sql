@@ -70,3 +70,15 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- p.s. mapapatawad kita once you apologize and admit your mistakes, and also learn from them, it's important kasi to grow and improve bilang kaklase at ang role, so be humble and open-minded, and don't be shy ng mag ask for help or guidance if you need it, hindi yan sign ng weakness but a sign of strength and maturity, so good luck with your coding journey and hope you learn from this experience ha!.
 -- if you just ignore this message and continue with your bad attitude, then expect mo na lang warnings ko and actions against you, so be ready for that, and don't say I didn't warn you, okay? so good luck and hope you change for the better, and be a good role model for others, thank you so much ah! you did your best talaga!
+
+
+-- NEW FEATURE! ADMIN USER TABLE FOR THE KIVY APP
+
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    username TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    is_admin BOOLEAN NOT NULL DEFAULT 0
+);

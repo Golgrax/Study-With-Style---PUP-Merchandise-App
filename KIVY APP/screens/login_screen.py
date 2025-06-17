@@ -18,9 +18,17 @@ class LoginScreen(Screen):
         if user and check_password_hash(user['password_hash'], password):
             app = App.get_running_app()
             app.current_user = username
+            app.is_admin = bool(user['is_admin'])
             self.manager.current = "home"
         else:
             popup = Popup(title="Login Failed",
                           content=Label(text="Incorrect username or password."),
                           size_hint=(0.8, 0.3))
             popup.open()
+
+    def logout(self):
+        app = App.get_running_app()
+        app.current_user = None
+        app.is_admin = False
+        app.cart = []
+        self.manager.current = 'login'

@@ -89,3 +89,11 @@
             Button:
                 text: "Inventory"
                 on_release: app.root.current = 'inventory_management'
+            Button:
+                id: admin_button
+                text: "Admin Panel"
+                # This button will be hidden by default
+                opacity: 0
+                size_hint_x: 0 if self.opacity == 0 else 1
+                disabled: True if self.opacity == 0 else False
+                on_release: app.root.current = 'admin_panel'

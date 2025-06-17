@@ -1,3 +1,4 @@
+from kivy.app import App
 from kivy.uix.screenmanager import Screen
 from database import DatabaseManager
 from widgets.product_item import ProductItem
@@ -7,6 +8,19 @@ class HomeScreen(Screen):
     db_manager = DatabaseManager()
 
     def on_pre_enter(self, *args):
+        app = App.get_running_app()
+        admin_button = self.ids.get('admin_button')
+        if admin_button:
+            if app.is_admin:
+                admin_button.opacity = 1
+                admin_button.disabled = False
+                admin_button.size_hint_x = 1
+            else:
+                admin_button.opacity = 0
+                admin_button.disabled = True
+                admin_button.size_hint_x = 0
+
+                
         best_seller = self.db_manager.fetch_best_seller()
         default_img = os.path.join(os.path.dirname(__file__), '..', '..', 'pup_study_style', 'static', 'assets', 'question_mark.png')
         
