@@ -39,7 +39,7 @@ class CartScreen(Screen):
         product_image = Image(source=img_src, size_hint_x=None, width='80dp')
 
         details_layout = BoxLayout(orientation='vertical')
-        product_label = Label(text=f"{product['name']}", font_size='16sp', halign='left', valign='top')
+        product_label = Label(text=f"{product['name']}", font_size='16sp', halign='left', valign='top', color=(0.1, 0.1, 0.1, 1))
         product_label.bind(size=product_label.setter('text_size'))
         
         price_label = Label(text=f"P{product['price']:.2f}", font_size='14sp', halign='left', valign='top')
