@@ -199,3 +199,9 @@ class InventoryManagementScreen(Screen):
     def show_popup(self, title, message):
         popup = Popup(title=title, content=Label(text=message), size_hint=(0.8, 0.3))
         popup.open()
+
+    def logout(self):
+        app = App.get_running_app()
+        app.current_user = None
+        app.is_admin = False
+        self.manager.current = 'login'

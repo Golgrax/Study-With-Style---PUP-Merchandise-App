@@ -15,11 +15,16 @@ class LoginScreen(Screen):
         username = self.username.text.strip()
         password = self.password.text.strip()
         user = self.db_manager.fetch_user(username)
+
         if user and check_password_hash(user['password_hash'], password):
             app = App.get_running_app()
             app.current_user = username
             app.is_admin = bool(user['is_admin'])
-            self.manager.current = "home"
+
+            if app.is_admin:
+                self.manager.current = "inventory_management"
+            else:
+                self.manager.current = "home"
         else:
             popup = Popup(title="Login Failed",
                           content=Label(text="Incorrect username or password."),

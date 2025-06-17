@@ -134,7 +134,10 @@
                 row_force_default: True
 
         Button:
-            text: "Back"
-            size_hint_y: None
-            height: '40dp'
-            on_release: app.root.current = 'home'
+                text: "View Shop"
+                on_release: app.root.current = 'home'
+            
+        Button:
+                text: "Log Out"
+                background_color: (0.8, 0.2, 0.2, 1) # Make it look different
+                on_release: root.logout()
