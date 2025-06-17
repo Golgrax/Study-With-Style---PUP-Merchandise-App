@@ -49,7 +49,7 @@ class CartScreen(Screen):
 
         quantity_controls = BoxLayout(orientation='horizontal', size_hint_x=None, width='120dp')
         btn_decrease = Button(text='-', size_hint_x=None, width='40dp', on_release=lambda x, i=item: self.decrease_quantity(i))
-        quantity_label = Label(text=str(item['quantity']), size_hint_x=None, width='40dp')
+        quantity_label = Label(text=str(item['quantity']), size_hint_x=None, width='40dp', color=(0.1, 0.1, 0.1, 1))
         btn_increase = Button(text='+', size_hint_x=None, width='40dp', on_release=lambda x, i=item: self.increase_quantity(i))
         quantity_controls.add_widget(btn_decrease)
         quantity_controls.add_widget(quantity_label)
