@@ -20,24 +20,35 @@ class RegisterScreen(Screen):
         password = self.password_input.text.strip()
         confirm_password = self.confirm_password_input.text.strip()
 
-        if not all([name, email, username, password, confirm_password]):
+        if not all([name, email, password, confirm_password]):
             self.show_popup("Error", "All fields are required.")
             return
         if password != confirm_password:
             self.show_popup("Error", "Passwords do not match.")
             return
 
+        if not username:
+            username = email
+
         if self.db_manager.user_exists(username, email):
             self.show_popup("Error", "Username or email already registered.")
             return
 
         password_hash = generate_password_hash(password)
-        if not self.db_manager.insert_user(name, email, username, password_hash):
-            self.show_popup("Error", "Registration failed due to a database error.")
-            return
 
-        self.show_popup("Success", "Registration successful. Please login.")
-        self.manager.current = "login"
+        conn = self.db_manager.get_connection()
+        try:
+            conn.execute(
+                "INSERT INTO users (name, email, username, password_hash, is_admin) VALUES (?, ?, ?, ?, ?)",
+                (name, email, username, password_hash, 0)
+            )
+            conn.commit()
+            self.show_popup("Success", "Registration successful. Please login.")
+            self.manager.current = "login"
+        except Exception as e:
+            self.show_popup("Error", f"Registration failed: {e}")
+        finally:
+            conn.close()
 
     def show_popup(self, title, message):
         popup = Popup(title=title,
