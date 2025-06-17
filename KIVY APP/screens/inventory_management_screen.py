@@ -16,6 +16,13 @@ class InventoryManagementScreen(Screen):
     assets_folder = os.path.join(os.path.dirname(__file__), '..', '..', 'pup_study_style', 'static', 'assets')
 
     def on_pre_enter(self, *args):
+        app = App.get_running_app()
+        if not app.is_admin:
+            self.manager.current = 'login'
+            Popup(title="Access Denied",
+                  content=Label(text="You must be an admin to access this page."),
+                  size_hint=(0.8, 0.3)).open()
+            return
         self.view_items()
         self.clear_inputs()
 
