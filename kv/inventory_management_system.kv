@@ -71,6 +71,21 @@
                 TextInput:
                     id: price_input
                     size_hint_x: 0.6
+                    
+            BoxLayout:
+                size_hint_y: None
+                height: '80dp'
+                Label:
+                    text: "Description"
+                    size_hint_x: 0.4
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                TextInput:
+                    id: description_input
+                    size_hint_x: 0.6
+                    multiline: True
+
             BoxLayout:
                 size_hint_y: None
                 height: '40dp'

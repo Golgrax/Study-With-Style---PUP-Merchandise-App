@@ -32,8 +32,8 @@ ito yunga mga step para i-run ang application sa iyong computer. (Or just downlo
 **Step 1: clone Repository**
 Buksan ang iyong terminal at i-clone ang project.
 ```bash
-git clone https://github.com/AfgunIsGun/yeepee.git
-cd yeepee
+git clone https://github.com/Golgrax/Study-With-Style---PUP-Merchandise-App.git
+cd Study-With-Style---PUP-Merchandise-App.git
 ```
 
 **Step 2: Gumawa ng Virtual Environment**
@@ -93,11 +93,11 @@ Medyo iba ang pag-install ng Kivy sa Windows.
 **Step 1: I-clone ang Repository**
 Gamit ang Git Bash, Command Prompt, o PowerShell.
 ```bash
-git clone https://github.com/AfgunIsGun/yeepee.git
-cd yeepee
+git clone https://github.com/Golgrax/Study-With-Style---PUP-Merchandise-App.git
+cd Study-With-Style---PUP-Merchandise-App.git
 ```
 
-**Step 2: Gumawa ng Virtual Environment**
+**Step 2: Gumawa ng Virtual Environment** (Optional pero I'm recoommending this.)
 ```bash
 python -m venv venv
 venv\Scripts\activate
