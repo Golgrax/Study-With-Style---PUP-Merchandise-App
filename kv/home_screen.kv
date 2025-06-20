@@ -52,8 +52,8 @@
                     id: best_seller_button
                     size_hint_y: None
                     height: '200dp'
-                    on_release: root.add_best_seller_to_cart()
-                    background_color: 0, 0, 0, 0
+                    on_release: root.view_product_details(root.best_seller_id)
+                    background_color: 0, 0, 0, 0 
 
                     BoxLayout:
                         orientation: 'vertical'

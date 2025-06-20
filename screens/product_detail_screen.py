@@ -7,7 +7,7 @@ from database import DatabaseManager
 import os
 
 class ProductDetailScreen(Screen):
-    product_id = NumericProperty()
+    product_id = NumericProperty(0)
     db_manager = DatabaseManager()
 
     def __init__(self, **kwargs):
@@ -21,20 +21,22 @@ class ProductDetailScreen(Screen):
         return self.default_img
 
     def on_pre_enter(self, *args):
+        if self.product_id == 0:
+            return
+
         product = self.db_manager.fetch_product_by_id(self.product_id)
         if product:
             self.ids.detail_name.text = product['name']
-            self.ids.detail_description.text = product['description'] if 'description' in product.keys() else 'No description available.'
+            self.ids.detail_description.text = product['description'] or 'No description available.'
             image_path = product['image_path'] if 'image_path' in product.keys() else None
             self.ids.detail_image.source = self.get_image_source(image_path)
             self.ids.detail_price.text = f"P{product['price']:.2f}"
-            self.product_id = product['id']
 
     def add_to_cart(self):
         app = App.get_running_app()
         app.add_to_cart(self.product_id)
         Popup(title="Added to Cart",
-              content=Label(text="Product added to cart."),
+              content=Label(text="Product added to your cart."),
               size_hint=(0.6, 0.2)).open()
               
     def buy_now(self):

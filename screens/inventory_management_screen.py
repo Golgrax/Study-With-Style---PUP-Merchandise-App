@@ -30,7 +30,7 @@ class InventoryManagementScreen(Screen):
         name = self.ids.item_name_input.text.strip()
         quantity_str = self.ids.quantity_input.text.strip()
         price_str = self.ids.price_input.text.strip()
-        
+        description = self.ids.description_input.text.strip()
         if not all([name, quantity_str, price_str]):
             self.show_popup("Error", "Name, Quantity, and Price are required.")
             return
@@ -44,8 +44,8 @@ class InventoryManagementScreen(Screen):
 
         conn = self.db_manager.get_connection()
         try:
-            conn.execute('INSERT INTO products (name, stock_quantity, price, image_path) VALUES (?, ?, ?, ?)', 
-                         (name, quantity, price, self.selected_image_path))
+            conn.execute('INSERT INTO products (name, description, stock_quantity, price, image_path) VALUES (?, ?, ?, ?, ?)', 
+                         (name, description, quantity, price, self.selected_image_path))
             conn.commit()
             self.show_popup("Success", "Item added successfully.")
             self.view_items()
@@ -58,6 +58,7 @@ class InventoryManagementScreen(Screen):
     def update_item(self):
         item_id_str = self.ids.item_id_input.text.strip()
         name = self.ids.item_name_input.text.strip()
+        description = self.ids.description_input.text.strip()
         quantity_str = self.ids.quantity_input.text.strip()
         price_str = self.ids.price_input.text.strip()
 
@@ -81,8 +82,8 @@ class InventoryManagementScreen(Screen):
                 old_product = self.db_manager.fetch_product_by_id(item_id)
                 image_to_update = old_product['image_path'] if old_product and 'image_path' in old_product.keys() else ''
             
-            cursor = conn.execute('UPDATE products SET name = ?, stock_quantity = ?, price = ?, image_path = ? WHERE id = ?',
-                               (name, quantity, price, image_to_update, item_id))
+            cursor = conn.execute('UPDATE products SET name = ?, description = ?, stock_quantity = ?, price = ?, image_path = ? WHERE id = ?',
+                               (name, description, quantity, price, image_to_update, item_id))
             if cursor.rowcount == 0:
                 self.show_popup("Error", "Item ID not found.")
             else:
@@ -130,6 +131,7 @@ class InventoryManagementScreen(Screen):
             product = self.db_manager.fetch_product_by_id(item_id)
             if product:
                 self.ids.item_name_input.text = product['name']
+                self.ids.description_input.text = product['description'] or ''
                 self.ids.quantity_input.text = str(product['stock_quantity'])
                 self.ids.price_input.text = str(product['price'])
                 self.ids.image_path_label.text = product['image_path'] if 'image_path' in product.keys() else 'No image'
@@ -198,6 +200,7 @@ class InventoryManagementScreen(Screen):
         if not keep_id:
             self.ids.item_id_input.text = ""
         self.ids.item_name_input.text = ""
+        self.ids.description_input.text = ""
         self.ids.quantity_input.text = ""
         self.ids.price_input.text = ""
         self.ids.image_path_label.text = "No image selected"

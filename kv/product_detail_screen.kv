@@ -1,0 +1,58 @@
+<ProductDetailScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '10dp'
+        spacing: '15dp'
+
+        Image:
+            id: detail_image
+            size_hint_y: 0.4
+            allow_stretch: True
+            keep_ratio: True
+
+        Label:
+            id: detail_name
+            text: "Product Name"
+            font_size: '22sp'
+            bold: True
+            size_hint_y: None
+            height: self.texture_size[1]
+            color: (0.2, 0.2, 0.2, 1)
+
+        Label:
+            id: detail_price
+            text: "P0.00"
+            font_size: '18sp'
+            bold: True
+            size_hint_y: None
+            height: self.texture_size[1]
+            color: (0.48, 0, 0, 1)
+
+        ScrollView:
+            size_hint_y: 0.3 # Take up 30% of the screen height
+            do_scroll_x: False
+            Label:
+                id: detail_description
+                text: "Product description goes here..."
+                text_size: self.width, None
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding: '10dp', '10dp'
+                color: (0.3, 0.3, 0.3, 1)
+
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            spacing: '10dp'
+            Button:
+                text: "Add to Cart"
+                on_release: root.add_to_cart()
+            Button:
+                text: "Buy Now"
+                on_release: root.buy_now()
+        
+        Button:
+            text: "Back to Shop"
+            size_hint_y: None
+            height: '40dp'
+            on_release: app.root.current = 'home'

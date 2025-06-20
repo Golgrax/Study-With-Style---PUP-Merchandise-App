@@ -3,8 +3,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.properties import NumericProperty, StringProperty
+from kivy.uix.behaviors import ButtonBehavior
 
-class ProductItem(BoxLayout):
+class ProductItem(ButtonBehavior, BoxLayout):
     product_id = NumericProperty()
     product_name = StringProperty()
     product_price = StringProperty()
